@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello World!</title>
+    <script src="js/system.js"></script>
+    <script src="js/jquery-2.1.4.min.js"></script>
+
+    <script>
+        window.$ = window.jQuery = require('jquery');
+    </script>
+
+
+    <script src="js/ui.js"></script>
+    <script src="js/editor.js"></script>
+
+    <link href="css/main.css" media="all" rel="stylesheet" />
+    <link href="css/fontello.css" media="all" rel="stylesheet" />
+    <link href="css/markdown.css" media="all" rel="stylesheet" />
+
+    <script>
+        //var async = require('async');
+        var oDoc, sDefTxt;
+
+        function initDoc() {
+            oDoc = document.getElementById("textBox");
+            sDefTxt = oDoc.innerHTML;
+        }
+
+        function formatDoc(sCmd, sValue) {
+            if (validateMode()) { document.execCommand(sCmd, true, sValue); oDoc.focus(); }
+        }
+
+        function addHr() {
+            formatDoc("inserthtml", "<hr/>");
+        }
+
+        function validateMode() {
+            return true;
+        }
+    </script>
+</head>
+<body  onload="initDoc();">
+
+<div class="sidebar">
+    <i class="icon-menu"></i>
+    <i class="icon-plus-1"></i>
+    <i class="icon-folder-empty"></i>
+
+    <i class="icon-attention-alt bot"></i>
+    <i class="icon-cog bot"></i>
+</div>
+
+<div class="list">
+    <div class="search-wrap">
+        <input id="search-text" type="text" placeholder="    搜索当前目录">
+        <i class="icon-search"></i>
+        <i class="icon-cancel"></i>
+    </div>
+
+</div>
+
+<div class="content">
+    <div class="btnbar">
+        <i class="icon-cw" tabindex="-1" onclick="formatDoc('redo');"></i>
+        <i class="icon-ccw" onclick="formatDoc('undo');"></i>
+        <i onclick="formatDoc('formatblock','h1');">H1</i>
+        <i onclick="formatDoc('formatblock','h2');">H2</i>
+        <i onclick="formatDoc('formatblock','h3');">H3</i>
+
+        <i class="icon-fire" onclick="formatDoc('inserthtml', '<hr/><br>');"></i>
+        <i class="icon-list-numbered"  onclick="formatDoc('insertorderedlist');"></i>
+        <i class="icon-list-bullet"  onclick="formatDoc('insertunorderedlist');"></i>
+        <i class="icon-right-open-big" onclick="formatDoc('formatblock','blockquote');"></i>
+        <i class="icon-link" onclick="var sLnk=prompt('请输入链接地址','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}"></i>
+        <i class="icon-code-1" ></i>
+
+        <i class="icon-check">保存</i>
+    </div>
+    <div id="textBox" contenteditable="true" class="markdown-body editbox">
+    </div>
+    <div class="title">
+        <input type="text" placeholder="请输入标题(可选)" value="">
+    </div>
+</div>
+
+<div class="foot">
+</div>
+
+</body>
+</html>
