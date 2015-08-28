@@ -13,13 +13,114 @@ $(function() {
     }).on("dragleave", function() {
         $(this).removeClass("hover");
     }).on("drop", function(je) {
-
         var oe = je.originalEvent;
-
         oe.preventDefault();
         for (var i = 0; i < oe.dataTransfer.files.length; ++i) {
             formatDoc("inserthtml", "<img src='" + oe.dataTransfer.files[i].path + "'/>");
         }
         return false;
-    });
+    }).on("paste", function(pe) {
+        var oe = pe.originalEvent;
+        if (oe && oe.clipboardData && oe.clipboardData.getData) {// Webkit - get data from clipboard, put into editdiv, cleanup, then cancel event
+            if (/text\/html/.test(oe.clipboardData.types)) {
+                if (oe.preventDefault) {
+                    oe.stopPropagation();
+                    oe.preventDefault();
+                }
+                var html =  oe.clipboardData.getData('text/html');
+                var md = extractMD(html);
+                formatDoc("inserthtml", mdToHtml(md));
+            } else if (/text\/plain/.test(oe.clipboardData.types)) {
+
+            }
+            else {
+
+            }
+            return false;
+        }
+
+    })
 });
+
+jQuery.fn.tagName = function() {
+    return this.prop("tagName");
+};
+
+function extractMD(val) {
+    var html = $("#textBox").html();
+
+    if(val!=null) {
+       html = val;
+    }
+    var md = "";
+
+    return $(toMarkdown(html)).text();
+
+
+    traverse(dom);
+
+    console.log(md);
+
+    function traverse(dom) {
+        $(dom).contents().each(function() {
+            if (3===this.typeName) {
+                md += $(this).text() + "\n";
+            } else {
+                if ("LI"===$(this).tagName()) {
+                    if ($(this).parents("blockquote").length>-1) {
+                        md += "> ";
+                    }
+                    if ("OL"===$(this).parent().tagName()) {
+                        md += $(this).sibling().index($(this)) + ". " + $(this).text() + "\n";
+                    }
+                    if ("UL"===$(this).parent().tagName()) {
+                        md +=  "- " + $(this).text() + "\n";
+                    }
+                    return;
+                }
+
+                if ("PRE"===$(this).tagName()) {
+                    md += "    " + $(this).text().replace( new RegExp( "\\n", "g" ), "\n    ");
+                    return;
+                }
+
+                if ("H1"===$(this).tagName()) {
+                    md += "\r# " + $(this).text() + "\n";
+                    return;
+                }
+                if ("H2"===$(this).tagName()) {
+                    md += "\r## " + $(this).text() + "\n";
+                    return;
+                }
+                if ("H3"===$(this).tagName()) {
+                    md += "\r### " + $(this).text() + "\n";
+                    return;
+                }
+                if ("H4"===$(this).tagName()) {
+                    md += "\r#### " + $(this).text() + "\n";
+                    return;
+                }
+                if ("H5"===$(this).tagName()) {
+                    md += "\r##### " + $(this).text() + "\n";
+                    return;
+                }
+
+
+                if ($(this).children().length>0) {
+                    traverse($(this));
+                } else {
+                    if ("BLOCKQUOTE"===$(this).tagName()) {
+                        md += "> " + $(this).text() + "\n";
+                        return;
+                    }
+
+                    md += "\r" + $(this).text() + "\n";
+                }
+            }
+        });
+    }
+}
+
+function mdToHtml(html) {
+    return marked(html)
+}
