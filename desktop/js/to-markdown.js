@@ -438,6 +438,20 @@ module.exports = [
   },
 
   {
+    filter:['span'],
+    replacement: function (content) {
+      return  content ;
+    }
+  },
+
+    {
+        filter:['pre','div'],
+        replacement: function (content) {
+            return  content + '\n' ;
+        }
+    },
+
+  {
     filter: ['strong', 'b'],
     replacement: function (content) {
       return '**' + content + '**';
@@ -445,6 +459,7 @@ module.exports = [
   },
 
   // Inline code
+
   {
     filter: function (node) {
       var hasSiblings = node.previousSibling || node.nextSibling;

@@ -7,7 +7,7 @@
 
 html {
     font-size: 14px;
-    font-family: 'Microsoft YaHei', 'Arial' ;
+    font-family: 'Microsoft YaHei UI','Microsoft YaHei','微软雅黑',SimSun,'宋体',sans-serif;
 }
 
 li {
@@ -124,6 +124,88 @@ li {
     color: #DDEBF7;
 }
 
+.list .note-list {
+    position: absolute;
+    top: 44px;
+    bottom: 0;
+    overflow-y: scroll;
+}
+
+.list .note-list li {
+    overflow: hidden;
+    position: relative;
+    height: 95px;
+    border-bottom: 1px solid #ccc;
+    list-style: none;
+}
+
+.list .note-list li.tpd .title {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 14px;
+    width: 220px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.list .note-list li.tpd .desc {
+    position: absolute;
+    left: 10px;
+    top: 33px;
+    width: 220px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    height: 55px;
+    color: #999;
+}
+
+.list .note-list li.d .desc {
+    width: 100%;
+    overflow: hidden;
+    height: 72px;
+    color: #999;
+}
+
+.list .note-list li .hovered {
+    transition: transform 0.2s ease-out;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: -100px;
+    background-color: #0078D7;
+    height: 100px;
+    padding: 10px;
+}
+.list .note-list li.on .hovered {
+    transform: translateY(100px);
+}
+.list .note-list li.selected .hovered {
+    transform: translateY(100px);
+}
+
+.list .note-list li .hovered .mt {
+    font-size: 16px;
+    color: #fff;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+}
+
+.list .note-list li .hovered .st {
+    color: #eee;
+    font-size: 12px;
+    line-height: 16px;
+}
+
 .content {
     position: absolute;
     top: 0;
@@ -147,7 +229,7 @@ li {
     font-style: normal;
     line-height: 44px;
     padding: 12px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .content .btnbar i.icon-check {

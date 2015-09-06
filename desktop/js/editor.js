@@ -28,18 +28,27 @@ $(function() {
                     oe.preventDefault();
                 }
                 var html =  oe.clipboardData.getData('text/html');
-                var md = extractMD(html);
+                //$(html).find("pre").remove();
+
+                var dom = $(html).wrapAll('<div>').parent();
+
+                console.log(dom.html());
+
+                dom.find("img").each(function() {
+                    $(this).attr("src", "file://" + downloadFile($(this).attr("src")));
+                });
+
+                console.log(dom.html());
+                var md = extractMD(dom.html());
                 formatDoc("inserthtml", mdToHtml(md));
             } else if (/text\/plain/.test(oe.clipboardData.types)) {
-
-            }
-            else {
+                formatDoc("inserthtml", oe.clipboardData.getData('text/plain'));
+            } else {
 
             }
             return false;
         }
-
-    })
+    });
 });
 
 jQuery.fn.tagName = function() {
@@ -47,80 +56,68 @@ jQuery.fn.tagName = function() {
 };
 
 function extractMD(val) {
-    var html = $("#textBox").html();
-
-    if(val!=null) {
-       html = val;
-    }
-    var md = "";
-
-    return $(toMarkdown(html)).text();
-
-
-    traverse(dom);
-
-    console.log(md);
-
-    function traverse(dom) {
-        $(dom).contents().each(function() {
-            if (3===this.typeName) {
-                md += $(this).text() + "\n";
-            } else {
-                if ("LI"===$(this).tagName()) {
-                    if ($(this).parents("blockquote").length>-1) {
-                        md += "> ";
-                    }
-                    if ("OL"===$(this).parent().tagName()) {
-                        md += $(this).sibling().index($(this)) + ". " + $(this).text() + "\n";
-                    }
-                    if ("UL"===$(this).parent().tagName()) {
-                        md +=  "- " + $(this).text() + "\n";
-                    }
-                    return;
-                }
-
-                if ("PRE"===$(this).tagName()) {
-                    md += "    " + $(this).text().replace( new RegExp( "\\n", "g" ), "\n    ");
-                    return;
-                }
-
-                if ("H1"===$(this).tagName()) {
-                    md += "\r# " + $(this).text() + "\n";
-                    return;
-                }
-                if ("H2"===$(this).tagName()) {
-                    md += "\r## " + $(this).text() + "\n";
-                    return;
-                }
-                if ("H3"===$(this).tagName()) {
-                    md += "\r### " + $(this).text() + "\n";
-                    return;
-                }
-                if ("H4"===$(this).tagName()) {
-                    md += "\r#### " + $(this).text() + "\n";
-                    return;
-                }
-                if ("H5"===$(this).tagName()) {
-                    md += "\r##### " + $(this).text() + "\n";
-                    return;
-                }
-
-
-                if ($(this).children().length>0) {
-                    traverse($(this));
-                } else {
-                    if ("BLOCKQUOTE"===$(this).tagName()) {
-                        md += "> " + $(this).text() + "\n";
-                        return;
-                    }
-
-                    md += "\r" + $(this).text() + "\n";
-                }
-            }
-        });
-    }
+    return toMarkdown(val);
 }
 
 function mdToHtml(html) {
     return marked(html)
+}
+
+function traverse(dom) {
+    $(dom).contents().each(function() {
+        if (3===this.typeName) {
+            md += $(this).text() + "\n";
+        } else {
+            if ("LI"===$(this).tagName()) {
+                if ($(this).parents("blockquote").length>-1) {
+                    md += "> ";
+                }
+                if ("OL"===$(this).parent().tagName()) {
+                    md += $(this).sibling().index($(this)) + ". " + $(this).text() + "\n";
+                }
+                if ("UL"===$(this).parent().tagName()) {
+                    md +=  "- " + $(this).text() + "\n";
+                }
+                return;
+            }
+
+            if ("PRE"===$(this).tagName()) {
+                md += "    " + $(this).text().replace( new RegExp( "\\n", "g" ), "\n    ");
+                return;
+            }
+
+            if ("H1"===$(this).tagName()) {
+                md += "\r# " + $(this).text() + "\n";
+                return;
+            }
+            if ("H2"===$(this).tagName()) {
+                md += "\r## " + $(this).text() + "\n";
+                return;
+            }
+            if ("H3"===$(this).tagName()) {
+                md += "\r### " + $(this).text() + "\n";
+                return;
+            }
+            if ("H4"===$(this).tagName()) {
+                md += "\r#### " + $(this).text() + "\n";
+                return;
+            }
+            if ("H5"===$(this).tagName()) {
+                md += "\r##### " + $(this).text() + "\n";
+                return;
+            }
+
+
+            if ($(this).children().length>0) {
+                traverse($(this));
+            } else {
+                if ("BLOCKQUOTE"===$(this).tagName()) {
+                    md += "> " + $(this).text() + "\n";
+                    return;
+                }
+
+                md += "\r" + $(this).text() + "\n";
+            }
+        }
+    });
 }

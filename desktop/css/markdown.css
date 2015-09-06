@@ -586,7 +586,7 @@
 
 ::-webkit-scrollbar {
     -webkit-appearance:none;
-    width:12px;
+    width:16px;
     _background-color:#f0f0f0;
 }
 

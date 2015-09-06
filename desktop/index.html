@@ -11,6 +11,7 @@
     </script>
 
 
+    <script src="js/common.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/to-markdown.js"></script>
@@ -46,7 +47,7 @@
 
 <div class="sidebar">
     <i class="icon-menu"></i>
-    <i class="icon-plus-1"></i>
+    <i class="icon-plus-1" onclick="newNote();"></i>
     <i class="icon-folder-empty"></i>
 
     <i class="icon-attention-alt bot"></i>
@@ -60,6 +61,131 @@
         <i class="icon-cancel"></i>
     </div>
 
+    <div class="note-list">
+        <ul>
+            <li class="tpd">
+            <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+            <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+            <div class="pic"></div>
+            <div class="hovered">
+                <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div  class="st">修改时间:2012-12-12 20:12</div>
+                <div  class="st">创建时间:2012-12-12 20:12</div>
+                <div  class="st">总计112字 </div>
+            </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+            <li class="tpd">
+                <div class="title">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+                <div class="pic"></div>
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+
+            <li class="d">
+                <div class="desc">这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以手术费 这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费这是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢 , 是一篇文章，而且是很长的文章 谢谢所以手术费,这是一篇文章，而且是很长的文章 谢谢所以 ,谢所以手术费</div>
+
+                <div class="hovered">
+                    <div  class="mt">这是一篇文章，而且是很长的文章 谢谢所以手术费</div>
+                    <div  class="st">修改时间:2012-12-12 20:12</div>
+                    <div  class="st">创建时间:2012-12-12 20:12</div>
+                    <div  class="st">总计112字 </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <div class="content">
@@ -69,7 +195,7 @@
         <i onclick="formatDoc('formatblock','h1');">H1</i>
         <i onclick="formatDoc('formatblock','h2');">H2</i>
         <i onclick="formatDoc('formatblock','h3');">H3</i>
-        <i onclick="formatDoc('formatblock','div');">T</i>
+        <i onclick="formatDoc('formatblock','div');">文本</i>
 
         <i class="icon-fire" onclick="formatDoc('inserthtml', '<hr/><br>');"></i>
         <i class="icon-list-numbered"  onclick="formatDoc('insertorderedlist');"></i>
@@ -77,8 +203,8 @@
         <i class="icon-right-open-big" onclick="formatDoc('formatblock','blockquote');"></i>
         <i class="icon-link" onclick="var sLnk=prompt('请输入链接地址','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}"></i>
         <i class="icon-code-1" ></i>
-
-        <i class="icon-check">保存</i>
+        <i onclick="mdMode();">MD</i>
+        <i class="icon-check" onclick="saveNote();">  保存</i>
     </div>
     <div id="textBox" contenteditable="true" class="markdown-body editbox">
     </div>
