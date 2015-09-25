@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery-2.1.4.min.js"></script>
+</head>
+<body>
+
+<style>
+
+    /**
+ * Mixin to put items on a circle
+ * [1] - Allows children to be absolutely positioned
+ * [2] - Allows the mixin to be used on a list
+ * [3] - In case box-sizing: border-box has been enabled
+ * [4] - Allows any type of direct children to be targeted
+ */
+    .circle-container {
+        position: relative;
+        /* [1] */
+        width: 15em;
+        height: 15em;
+        padding: 0;
+        border-radius: 50%;
+        list-style: none;
+        /* [2] */
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        /* [3] */
+        margin: 5em auto 0;
+        border: solid 1px #7FECC3;
+    }
+
+    .circle-container > * {
+        /* [4] */
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 6em;
+        height: 6em;
+        margin: -3em;
+        -webkit-transition: -webkit-transform .3s ease-out;
+    }
+
+
+
+    .circle-container a {
+        display: block;
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px #ccc;
+    }
+
+    .circle-container img {
+        display: block;
+        width: 100%;
+        border-radius: 50%;
+        /*
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+        */
+    }
+
+    .circle-container img:hover {
+        -webkit-filter: grayscale(0);
+        filter: grayscale(0);
+    }
+
+
+</style>
+
+<script>
+
+    $(function () {
+        $('.circle-container').children("li").each(function () {
+            var l = $('.circle-container').children("li").length;
+            var c = $('.circle-container').children("li").index(this);
+            var e = 360/l;
+            $(this).data("rotate", e*c);
+            //$(this).addClass('item' + ($(this).index() + 1));
+            $(this).css("-webkit-transform", "rotate(" + (e*c) + "deg) translate(7.5em) rotate(-" + (e*c) + "deg)");
+
+            $(this).click(function() {
+
+                if ($(this).hasClass("current")) {
+                    $(this).removeClass("current");
+                    $('.circle-container li:not(.current)').each(function() {
+                        var crr =  $(this).data("rotate");
+                        $(this).css("-webkit-transform", "rotate(" + crr + "deg) translate(7.5em) scale(1) rotate(-" + crr + "deg)");
+
+                    })
+                } else {
+                    $(".current").removeClass("current");
+
+                    $(this).addClass("current");
+                    var arr = $(this).data("rotate");
+                    $(this).css("-webkit-transform", "rotate(" + arr + "deg) translate(7.5em) scale(1.5) rotate(-" + arr + "deg)");
+
+                    $('.circle-container li:not(.current)').each(function(){
+                        var crr =  $(this).data("rotate");
+                        $(this).css("-webkit-transform", "rotate(" + crr + "deg) translate(7.5em) scale(.8) rotate(-" + crr + "deg)");
+                    });
+                }
+
+
+            });
+        });
+    });
+
+</script>
+<div>
+
+    <ul class='circle-container'>
+        <span style="line-height: 6em;font-size: 1.5em;text-align: center;">Groupx</span>
+        <li><a href='#'><img src='img/p1.jpg'></a></li>
+        <li><a href='#'><img src='img/p2.jpg'></a></li>
+        <li><a href='#'><img src='img/p3.jpg'></a></li>
+        <li><a href='#'><img src='img/p4.jpg'></a></li>
+    </ul>
+</div>
+
+
+</body>
+</html

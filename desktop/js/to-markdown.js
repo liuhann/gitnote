@@ -438,14 +438,14 @@ module.exports = [
   },
 
   {
-    filter:['span'],
+    filter:['span',"abbr",'aside', 'table', 'tbody'],
     replacement: function (content) {
       return  content ;
     }
   },
 
     {
-        filter:['pre','div'],
+        filter:['pre','div','header','tr', 'td'],
         replacement: function (content) {
             return  content + '\n' ;
         }

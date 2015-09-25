@@ -1,0 +1,348 @@
+@import "common.scss";
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  box-sizing: border-box;
+}
+
+$basefont: 14px;
+
+html {
+  font-size: $basefont;
+  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif;
+}
+
+.template {
+  display: none;
+}
+
+li {
+}
+
+
+
+.sidebar {
+  width: 44px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #F9F9F9;
+  border-right: 1px solid #E6E6E6;
+
+  i {
+    font-size: 1.2rem;
+    color: #fff;
+    float: left;
+    cursor: pointer;
+    transition: background-color .3s ease-out;
+
+    &.icon-plus {
+      font-size: 1.5rem;
+    }
+    &:before {
+      width: 44px;
+      margin: 0;
+      display: inline-block;
+      height: 44px;
+      text-align: center;
+      color: #444;
+      font-weight: 100;
+      vertical-align: middle;
+      line-height: 44px;
+    }
+
+    &:hover {
+      background-color: #DDEBF7;
+    }
+
+    &.icon-menu:before {
+      background-color: #0076DE;
+      color: #fff;
+    }
+
+    &.icon-cog {
+      position: absolute;
+      left:0;
+      bottom: 0;
+    }
+  }
+}
+
+
+
+.list {
+  position: absolute;
+  left: 44px;
+  top: 0;
+  bottom: 0;
+  width: 340px;
+  border-right: 1px solid #E6E6E6;
+
+  .search-wrap {
+    height: 44px;
+    background-color: #0076DE;
+    color: #fff;
+
+    input {
+      border: 0;
+      padding: 13px;
+      font-size: 16px;
+      background-color: #0076DE;
+      width: 295px;
+      color: #fff;
+      transition: background-color .3s cubic-bezier(1, 0.03, 0.85, 0.4);
+
+      &:focus {
+        border: none;
+        outline: none;
+      }
+    }
+
+    i.icon-search {
+      position: absolute;
+      left: 7px;
+      top: 7px;
+      font-size: 22px;
+      transition: transform .3s ease-in;
+      cursor: pointer;
+    }
+
+    i.icon-cancel {
+      position: absolute;
+      right: 60px;
+      top: -40px;
+      cursor: pointer;
+      font-size: 22px;
+      transition: transform .3s ease-in;
+    }
+
+    &.in {
+      i.icon-search {
+        transform: translateX(220px);
+        color: #1664A7;
+      }
+      i.icon-cancel {
+        transform: translateY(46px);
+        color: #1664A7;
+      }
+    }
+
+    input::-webkit-input-placeholder {
+      color: #DDEBF7;
+    }
+  }
+
+  .note-list {
+    position: absolute;
+    top: 44px;
+    bottom: 0;
+    overflow-y: auto;
+    width: 339px;
+
+    li {
+      overflow: hidden;
+      position: relative;
+      height: 95px;
+      border-bottom: 1px solid #ccc;
+      list-style: none;
+
+
+      &.selected {
+        background-color: #f8f8f8;
+      }
+      &.tpd {
+        .title {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          font-size: 14px;
+          width: 220px;
+          overflow: hidden;
+          overflow-wrap: break-word;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-wrap: break-word;
+        }
+
+        .desc {
+          position: absolute;
+          left: 10px;
+          top: 33px;
+          width: 220px;
+          overflow: hidden;
+          overflow-wrap: break-word;
+          text-overflow: ellipsis;
+          word-wrap: break-word;
+          height: 55px;
+          color: #999;
+        }
+      }
+
+      &.dt {
+        .title {
+          margin: 10px;
+          margin-bottom: 4px;
+          font-size: 14px;
+          overflow: hidden;
+          color: #444;
+        }
+        .tags {
+          margin:10px;
+
+          .tag {
+            background-color: #4BCA81;
+            color: white;
+            padding: 2px 5px 2px 5px;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-right: .4rem;
+          }
+        }
+
+        .desc {
+          margin: 0 10px;
+          line-height: 22px;
+          height: 22px;
+          overflow: hidden;
+          color: #999;
+        }
+      }
+
+      .rm {
+        display: none;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: #CC1B40;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      &:hover .rm {
+        display: block;
+      }
+
+    }
+  }
+}
+
+
+.content {
+  position: absolute;
+  top: 0;
+  right:0;
+  bottom: 0;
+  left: 384px;
+  background-color: #fff;
+
+  .btnbar {
+    background-color: #0076DE;
+    color: #fff;
+    height: 44px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    i {
+      font-style: normal;
+      line-height: 44px;
+      padding: 12px;
+      font-size: 14px;
+
+      &.icon-ok {
+        float: right;
+        line-height: 22px;
+      }
+
+      &:hover {
+        background-color: #0078D7;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .editbox {
+    overflow: auto;
+    outline: none;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 4px;
+    top: 104px;
+
+    textarea {
+      position: absolute;
+      left:0;right:0;top:0;bottom: 0;
+      width: 100%;
+      border: none;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      color: #333;
+      font-family:'Microsoft YaHei', "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      word-wrap: break-word;
+      outline: none;
+    }
+  }
+
+  .title {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 50px;
+    border-bottom: 1px solid #E6E6E6;
+
+    input {
+      width: 50%;
+      font-size: 16px;
+      padding: 5px 5px 5px 0;
+      line-height: 28px;
+      border: none;
+      outline: none;
+    }
+
+    div.tags {
+      width: 50%;
+      float: right;
+      text-align: right;
+
+      span.tag {
+        background-color: #9BCE35;
+        color: white;
+        padding: 2px 5px 2px 5px;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-right: .4rem;
+        -webkit-transition: padding .2s linear;
+      }
+
+      span.tag:hover {
+        padding: 2px 10px 2px 5px;
+        cursor: pointer;
+        &:after {
+          font-family: "fontello";
+          margin-left: 5px;
+          content: '\e801';
+        }
+      }
+      input {
+        font-size: 1rem;
+        width: 8rem;
+        border: none;
+        outline: none;
+      }
+    }
+  }
+}
+
+.mark-down-section {
+  height: 20px;
+}
+
+

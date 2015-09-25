@@ -4,14 +4,14 @@
 
 Date.prototype.format = function(fmt) {
     var o = {
-        "M+" : this.getMonth()+1, //‘¬∑›
-        "d+" : this.getDate(), //»’
-        "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //–° ±
-        "H+" : this.getHours(), //–° ±
-        "m+" : this.getMinutes(), //∑÷
-        "s+" : this.getSeconds(), //√Î
-        "q+" : Math.floor((this.getMonth()+3)/3), //ºæ∂»
-        "S" : this.getMilliseconds() //∫¡√Î
+        "M+" : this.getMonth()+1, //Êúà‰ªΩ
+        "d+" : this.getDate(), //Êó•
+        "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //Â∞èÊó∂
+        "H+" : this.getHours(), //Â∞èÊó∂
+        "m+" : this.getMinutes(), //ÂàÜ
+        "s+" : this.getSeconds(), //Áßí
+        "q+" : Math.floor((this.getMonth()+3)/3), //Â≠£Â∫¶
+        "S" : this.getMilliseconds() //ÊØ´Áßí
     };
     var week = {
         "0" : "/u65e5",
@@ -39,7 +39,7 @@ Date.prototype.format = function(fmt) {
 function formatMoney(number, places, symbol, thousand, decimal) {
     number = number || 0;
     places = !isNaN(places = Math.abs(places)) ? places : 2;
-    symbol = symbol !== undefined ? symbol : "£§";
+    symbol = symbol !== undefined ? symbol : "Ôø•";
     thousand = (thousand=="")?"":",";
     decimal = decimal || ".";
     var negative = number < 0 ? "-" : "",
@@ -59,4 +59,63 @@ function randStr(len){
     return tmp;
 }
 
+//Ëá™Â∑±ÂÜôÁöÑmd Ëß£ÊûêÂô®„ÄÇ
+function traverse(dom) {
+    $(dom).contents().each(function() {
+        if (3===this.typeName) {
+            md += $(this).text() + "\n";
+        } else {
+            if ("LI"===$(this).tagName()) {
+                if ($(this).parents("blockquote").length>-1) {
+                    md += "> ";
+                }
+                if ("OL"===$(this).parent().tagName()) {
+                    md += $(this).sibling().index($(this)) + ". " + $(this).text() + "\n";
+                }
+                if ("UL"===$(this).parent().tagName()) {
+                    md +=  "- " + $(this).text() + "\n";
+                }
+                return;
+            }
+
+            if ("PRE"===$(this).tagName()) {
+                md += "    " + $(this).text().replace( new RegExp( "\\n", "g" ), "\n    ");
+                return;
+            }
+
+            if ("H1"===$(this).tagName()) {
+                md += "\r# " + $(this).text() + "\n";
+                return;
+            }
+            if ("H2"===$(this).tagName()) {
+                md += "\r## " + $(this).text() + "\n";
+                return;
+            }
+            if ("H3"===$(this).tagName()) {
+                md += "\r### " + $(this).text() + "\n";
+                return;
+            }
+            if ("H4"===$(this).tagName()) {
+                md += "\r#### " + $(this).text() + "\n";
+                return;
+            }
+            if ("H5"===$(this).tagName()) {
+                md += "\r##### " + $(this).text() + "\n";
+                return;
+            }
+
+
+            if ($(this).children().length>0) {
+                traverse($(this));
+            } else {
+                if ("BLOCKQUOTE"===$(this).tagName()) {
+                    md += "> " + $(this).text() + "\n";
+                    return;
+                }
+
+                md += "\r" + $(this).text() + "\n";
+            }
+        }
+    });
+}
 

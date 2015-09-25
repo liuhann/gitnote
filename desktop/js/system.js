@@ -16,21 +16,21 @@ var fs = require('fs');
 
 var currentNote = null;
 
-function listNotes(path) {
-    if (path==null) {
-        path = "recents";
-    }
-    var fs = require('fs');
-    fs.readdir(rootPath + path, function(error, files) {
+function listNotes() {
+    fs.readdir(rootPath, function(error, files) {
         if (!error && files.length>0) {
             for(var i=0; i<files.length; i++) {
                 addNote(files[i]);
             }
+        } else {
+            newNote();
+
         }
     });
 }
 
 function addNote(file) {
+
 
 }
 
@@ -43,8 +43,11 @@ function downloadFile(src) {
             fs.mkdir(rootPath  + currentNote + "/img/", function() {
 
                 if (src.indexOf("data:image")>-1) {
-                    fs.writeFile(filePath, src, function(error) {
-                    });
+                    return null;
+                    /*   base64的图片稍后处理
+                     fs.writeFile(filePath, src, function(error) {
+                     });
+                     */
                 } else {
                     var file = fs.createWriteStream(filePath);
                     var request = http.get(src, function(response) {
@@ -62,7 +65,16 @@ function downloadFile(src) {
     return filePath;
 }
 
-function newNote() {
+function copyFile(src) {
+    var filePath = rootPath  + currentNote + "/img/" + randStr(4) + ".png";
+    fs.mkdir(rootPath  + currentNote + "/img/", function() {
+        fs.createReadStream(src).pipe(fs.createWriteStream(filePath));
+    });
+
+    return filePath;
+}
+
+function newNote(template) {
     fs.readdir(rootPath, function(error, files){
         var name = 1;
         if (!error && files.length>0) {
@@ -75,7 +87,13 @@ function newNote() {
         name++;
         fs.mkdir(rootPath + name, function() {
             currentNote = name;
-            $("#textBox").empty();
+
+            if (template==null) {
+                $("#textBox").empty();
+            } else {
+                $("#textBox").html(mdToHtml(template));
+
+            }
         });
     });
 }
@@ -89,3 +107,4 @@ function saveNote() {
         }
     });
 }
+

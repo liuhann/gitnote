@@ -1,0 +1,32 @@
+.hidden {
+  display: none;
+}
+
+pre {
+  white-space: pre;           /* CSS 2.0 */
+  white-space: pre-wrap;      /* CSS 2.1 */
+  white-space: pre-line;      /* CSS 3.0 */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  word-wrap: break-word;      /* IE 5+ */
+}
+
+
+::-webkit-scrollbar {
+  -webkit-appearance:none;
+  width:8px;
+  _background-color:#f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background-clip:content-box;
+  _background-color:#bfbfbf;
+  background-color:rgba(0,0,0, .25);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color:rgba(0,0,0, .2);
+}
+
+::-webkit-scrollbar-corner {
+  background-color:#e6e6e6;
+}
