@@ -1,12 +1,16 @@
 
 .icon-ok:before { content: '\e800'; } /* '' */
 .icon-cancel:before { content: '\e801'; } /* '' */
+.icon-database:before { content: '\e802'; } /* '' */
 .icon-minus:before { content: '\e803'; } /* '' */
 .icon-link:before { content: '\e804'; } /* '' */
 .icon-plus:before { content: '\e805'; } /* '' */
 .icon-code:before { content: '\e806'; } /* '' */
 .icon-menu:before { content: '\e807'; } /* '' */
+.icon-fire:before { content: '\e808'; } /* '' */
+.icon-wallet:before { content: '\e809'; } /* '' */
 .icon-right-open:before { content: '\e80a'; } /* '' */
+.icon-paper-plane:before { content: '\e80b'; } /* '' */
 .icon-list-bullet:before { content: '\e80c'; } /* '' */
 .icon-list-numbered:before { content: '\e80d'; } /* '' */
 .icon-user:before { content: '\e810'; } /* '' */

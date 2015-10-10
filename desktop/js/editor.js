@@ -3,7 +3,22 @@ var rootPath = "d:/GitNote/";
 var http = require('http');
 var fs = require('fs');
 
+var currentNote = {};
+
+var allTags = [];
+
 $(function() {
+    /**Init when some thing copied into the editor*/
+    initPaste();
+
+    /**Events */
+    initEvents();
+
+    /**Read notes from fs*/
+    listNotes();
+});
+
+function initPaste() {
     window.ondragover = function(e) { e.preventDefault(); return false };
     window.ondrop = function(e) { e.preventDefault(); return false };
     var holder = document.getElementById('textBox');
@@ -31,8 +46,6 @@ $(function() {
 
                 var dom = $(html).wrapAll('<div>').parent();
                 dom.find("img").each(function() {
-                    var thisimg = this;
-
                     var url = downloadFile($(this).attr("src"), function() {
 
                     });
@@ -53,20 +66,31 @@ $(function() {
             return false;
         }
     });
+}
 
+function formatDoc(sCmd, sValue) {
+    oDoc = document.getElementById("textBox");
+    document.execCommand(sCmd, true, sValue); oDoc.focus();
+}
+
+
+function initEvents() {
     $("#note-title").keyup(function() {
         $(".note-list li.selected .title").html($(this).val());
         $(".note-list li.selected .hovered .mt").html($(this).val());
     });
-    listNotes();
-});
 
-var currentNote = {};
+    $(".tag-edit .close").click(function() {
+        $(".tag-edit").slideUp('fast');
+    });
+}
 
 function listNotes() {
     var notes = [];
     fs.readdir(rootPath, function(error, files) {
         if (!error && files.length>0) {
+
+            /**read note info from meta*/
             for(var i=0; i<files.length; i++) {
                 var path = rootPath + files[i] + "/meta.md";
                 if(fs.existsSync(path)) {
@@ -76,6 +100,8 @@ function listNotes() {
                     notes.push(note);
                 }
             }
+
+            /**resort by modified time*/
             notes.sort(function(x, y) {
                 if (new Date(x.modified) > new Date(y.modified)) {
                     return 1;
@@ -83,48 +109,65 @@ function listNotes() {
                     return 0;
                 }
             });
+
+            /**display notes*/
             for(var i=0; i<notes.length; i++) {
+                /**init all tags*/
+                if (notes[i].tags) {
+                    var dr = notes[i].tags.split(",");
+                    for(var r=0; r<dr.length; r++) {
+                        if (allTags.indexOf(dr[r])===-1) {
+                            allTags.push(dr[r]);
+                        }
+                        //allTags[dr[r].toString()] = {};
+                    }
+                }
                 _addNote(notes[i]);
             }
         }
 
+        console.log(allTags);
+
         if (notes.length>0) {
+            /**open the recentest note by default*/
             currentNote = notes[notes.length-1];
             $(".note-list li:not(.template):first").addClass("selected");
             openNote(currentNote);
         } else {
+            /**If no note, create a default one*/
             newNote();
         }
     });
 }
 
+/***
+ * Update note info on the navigation list
+ * @param note
+ * @private
+ */
 function _updateNote(note) {
     var noteListEntry = $("#" + note.path.slice(note.path.lastIndexOf("/")+1));
-    noteListEntry.find(".desc").html(note.desc);
-    noteListEntry.find(".modified").html("更新时间:" + note.modified);
-    noteListEntry.find(".count").html("总计" + note.length + "字");
+
+    __bindNote(noteListEntry, note);
 
     if ($(".note-list li.dt").index(noteListEntry)>0) {
         noteListEntry.prependTo(noteListEntry.parent());
     }
 }
 
+
+/**
+ * Add note to the navigation list
+ * @param note
+ * @param focused
+ * @private
+ */
 function _addNote(note, focused) {
     var cloned = $(".note-list li.dt.template").clone().removeClass("template").addClass("note");
 
     cloned.attr("id", note.path.slice(note.path.lastIndexOf("/")+1));
-    cloned.data("note", note);
-    cloned.find(".desc").html(note.desc);
-    cloned.find(".title").html(note.title);
 
-    if (note.title==="") {
-        note.title = "无标题笔记";
-    }
-
-    cloned.find(".hovered .mt").html(note.title);
-    cloned.find(".hovered .created").html("创建时间：" + note.created);
-    cloned.find(".hovered .modified").html("更新时间：" + note.modified);
-    cloned.find(".hovered .count").html("总计" + note.length + "字");
+    __bindNote(cloned, note);
 
     cloned.click(function() {
         if ($(this).hasClass("selected")) {
@@ -153,6 +196,25 @@ function _addNote(note, focused) {
 }
 
 
+function __bindNote(cloned, note) {
+    cloned.data("note", note);
+    cloned.find(".desc").html(note.desc);
+    cloned.find(".title").html(note.title);
+
+    if (note.title==="") {
+        note.title = "无标题笔记";
+    }
+    cloned.find(".tags").empty();
+    if (note.tags) {
+        var dr = note.tags.split(",");
+        for (var i = 0; i < dr.length; i++) {
+            var o = dr[i];
+            cloned.find(".tags").append("<span class='tag'>" + o + "</span>");
+        }
+    }
+}
+
+
 function openNote(note) {
     htmlMode();
     currentNote = note;
@@ -160,7 +222,6 @@ function openNote(note) {
     $("#textBox").html(MdUtils.md2Html(md));
     currentNote.md = md;
     $("#note-title").val(note.title);
-    initTags();
 }
 
 
@@ -231,9 +292,12 @@ function downloadFile(src, cb) {
 
 function newNote(template) {
     var name = new Date().format("note-yyMMdd-HHmmss");
-    fs.mkdir(rootPath + name, function() {
-        currentNote.path = rootPath + name;
 
+    saveNote(true);
+    fs.mkdir(rootPath + name, function() {
+        currentNote = {};
+
+        currentNote.path = rootPath + name;
         if (template==null) {
             $("#textBox").empty();
         } else {
@@ -247,7 +311,6 @@ function newNote(template) {
         currentNote.title = "";
 
         $("#note-title").val(currentNote.title);
-
         saveNote();
         _addNote(currentNote, true);
     });
@@ -263,6 +326,11 @@ function saveNote(autoSave) {
         "created": currentNote.created,
         "title": ($("#note-title").val()==="")?"无标题笔记":$("#note-title").val()
     };
+
+    if (currentNote.tags) {
+        meta.tags = currentNote.tags;
+    }
+
     /**Here replace out the marks like header(##),link([]),image(![])*/
     var desc = MdUtils.md2RawText(md);
 
@@ -274,7 +342,6 @@ function saveNote(autoSave) {
     meta.length = desc.length;
 
     var pics = MdUtils.getMdPics(md);
-    console.log(pics);
 
     currentNote.length = meta.length;
     currentNote.modified = meta.modified;
@@ -308,17 +375,6 @@ function saveNote(autoSave) {
 
 
 
-function initTags() {
-
-    $("#new-tag").unbind();
-    $( "#new-tag" ).keypress(function( event ) {
-        if ( event.which == 13 ) {
-            alert("addit");
-        }
-    });
-}
-
-
 var MdUtils = {
 
     //plat line object to md
@@ -339,7 +395,6 @@ var MdUtils = {
                 o[lines[i].substring(0, sep)] = lines[i].substring(sep+1);
             }
         }
-        console.log(o);
         return o;
     },
 
@@ -358,7 +413,6 @@ var MdUtils = {
         }
         return rs;
     },
-
 
     getMeta: function(md) {
         var lines = md.split("\n");
@@ -396,8 +450,7 @@ function mdMode() {
 
     $(".btnbar i").hide();
     $(".btnbar i.mode-rtf").show();
-    $(".btnbar i.icon-check").show();
-
+    $(".btnbar i.icon-ok").show();
 }
 
 function htmlMode() {
@@ -411,5 +464,89 @@ function htmlMode() {
 
     $(".btnbar i").show();
     $(".btnbar i.mode-rtf").hide();
-    $(".btnbar i.icon-check").show();
+    $(".btnbar i.icon-ok").show();
+}
+
+
+function editTag() {
+    $(".tag-edit").show();
+    showMask();
+
+    $(".tag-edit .tags .tag").remove();
+
+    var dr = [];
+    /**init current note tag*/
+    $(".tag-edit .on .empty").remove();
+
+    if (currentNote.tags) {
+        dr = currentNote.tags.split(",");
+        for(var i=0; i<dr.length; i++) {
+            addTag(dr[i], ".on");
+        }
+    }
+
+    if (dr.length===0) {
+        $(".tag-edit .on").append("<span class='empty'>无标签</span>");
+    }
+
+    /**init all tags*/
+    for (var i = 0; i < allTags.length; i++) {
+        var tag = allTags[i];
+        if (dr.indexOf(tag)===-1) {
+            addTag(tag, ".off");
+        }
+    }
+    $("#new-tag").unbind();
+    $("#new-tag").keypress(function( event ) {
+        if ( event.which == 13 ) {
+            var newtag = $("#new-tag").val();
+            if (newtag === "") {
+                return;
+            }
+            $(".tag-edit .on span.empty").remove();
+            addTag(newtag, ".on");
+            $("#new-tag").val("");
+        }
+    });
+
+    function addTag(name, parent) {
+        var tspan = $("<span class='tag'>" + name + "</span>");
+        $(".tag-edit").find(parent).append(tspan);
+
+        tspan.click(function() {
+            if ($(this).parent().hasClass("on")) {
+                moveAnimate($(this), $(".tag-edit .tags .off"));
+                if ($(".tag-edit .on .tag").length===0) {
+                    $(".tag-edit .on").append("<span class='empty'>无标签</span>");
+                }
+            } else {
+                $(".tag-edit .on span.empty").remove();
+                moveAnimate($(this), $(".tag-edit .tags .on"));
+            }
+        });
+    }
+}
+
+function saveEditTag() {
+    var tags = [];
+    $(".tag-edit .on .tag").each(function() {
+        tags.push($(this).html());
+    });
+    /*
+    allTags = [];
+    $(".tag-edit .tag").each(function() {
+        var tag = $(this).html();
+        if (allTags.indexOf(tag)===-1) {
+            allTags.push(tag);
+        }
+    });
+    */
+    currentNote.tags = tags.join(",");
+    saveNote();
+    closeEditTag();
+}
+
+function closeEditTag() {
+    $(".tag-edit").hide();
+    hideMask();
 }

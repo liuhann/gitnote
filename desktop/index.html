@@ -2,46 +2,23 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Hello World!</title>
+    <title>吉吉笔记(GitNote)</title>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-
     <script>
         window.$ = window.jQuery = require('jquery');
     </script>
-
     <script src="js/common.js"></script>
     <script src="js/to-markdown.js"></script>
-    <script src="js/marked.js"></script>
 
+    <script src="js/marked.js"></script>
     <script src="js/editor.js"></script>
 
     <link href="css/main.css" media="all" rel="stylesheet" />
     <link href="css/fontello.css" media="all" rel="stylesheet" />
     <link href="css/markdown.css" media="all" rel="stylesheet" />
 
-    <script>
-        //var async = require('async');
-        var oDoc, sDefTxt;
-
-        function initDoc() {
-            oDoc = document.getElementById("textBox");
-            sDefTxt = oDoc.innerHTML;
-        }
-
-        function formatDoc(sCmd, sValue) {
-            if (validateMode()) { document.execCommand(sCmd, true, sValue); oDoc.focus(); }
-        }
-
-        function addHr() {
-            formatDoc("inserthtml", "<hr/>");
-        }
-
-        function validateMode() {
-            return true;
-        }
-    </script>
 </head>
-<body  onload="initDoc();">
+<body >
 
 <div class="sidebar">
     <i class="icon-menu"></i>
@@ -50,6 +27,10 @@
     <i class="icon-trash"></i>
 
     <i class="icon-params bot"></i>
+</div>
+
+<div class="navby">
+
 </div>
 
 <div class="list">
@@ -64,18 +45,12 @@
                 <div class="title"></div>
                 <div class="desc"></div>
                 <div class="pic"></div>
-                <div class="hovered">
-                    <div  class="mt"></div>
-                    <div  class="st modified"></div>
-                    <div  class="st created"></div>
-                    <div  class="st count"></div>
-                </div>
-                <div class="rm icon-trash-empty">
+                <div class="rm icon-trash">
                 </div>
             </li>
             <li class="dt template">
                 <div class="title"></div>
-                <div class="tags"><span class="tag">技术</span><span class="tag">Java</span></div>
+                <div class="tags"></div>
                 <div class="desc"></div>
                 <div class="rm icon-trash">
                 </div>
@@ -99,7 +74,6 @@
         <i class="icon-list-bullet"  onclick="formatDoc('insertunorderedlist');"></i>
         <i class=" icon-right-open" onclick="formatDoc('formatblock','blockquote');"></i>
 
-
         <i class="icon-link" onclick="var sLnk=prompt('请输入链接地址','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}"></i>
         <i class="icon-code" ></i>
         <i class="mode-md" onclick="mdMode();">MD文本模式</i>
@@ -115,8 +89,28 @@
 
     <div class="title">
         <input type="text" id="note-title" placeholder="请输入标题" value="">
-        <div class="tags"><span class="tag">技术</span> <input id="new-tag" placeholder="输入标签"></div>
+        <div class="tags"><a onclick='editTag();'>管理标签</a></div>
+
+        <div class="tag-edit hidden focus-pop">
+            <div class="tags">
+                <h5>标签列表</h5>
+                <a class="close" onclick="saveEditTag();">确定</a>
+                <div class="on">
+                    <span class="tag">技术</span><span class="tag">美术</span>
+                </div>
+                <br class="sep">
+                <div class="off">
+                    <span class="tag off">Java</span><span class="tag off">Some</span><span class="tag on">技术</span>
+                </div>
+            </div>
+            <input placeholder="输入标签名" id="new-tag">
+
+        </div>
     </div>
+</div>
+
+<div class="mask">
+
 </div>
 
 <div class="foot">

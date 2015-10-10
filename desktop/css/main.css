@@ -1,4 +1,16 @@
+@charset "UTF-8";
 .hidden {
+  display: none; }
+
+.mask {
+  position: absolute;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.3);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transition: opacity .3s ease-out;
   display: none; }
 
 pre {
@@ -51,7 +63,8 @@ html {
   left: 0;
   bottom: 0;
   background-color: #F9F9F9;
-  border-right: 1px solid #E6E6E6; }
+  border-right: 1px solid #E6E6E6;
+  z-index: 10; }
   .sidebar i {
     font-size: 1.2rem;
     color: #fff;
@@ -80,13 +93,17 @@ html {
       left: 0;
       bottom: 0; }
 
+.navby {
+  z-index: 9; }
+
 .list {
   position: absolute;
   left: 44px;
   top: 0;
   bottom: 0;
   width: 340px;
-  border-right: 1px solid #E6E6E6; }
+  border-right: 1px solid #E6E6E6;
+  z-index: 10; }
   .list .search-wrap {
     height: 44px;
     background-color: #0076DE;
@@ -169,11 +186,11 @@ html {
       .list .note-list li.dt .tags {
         margin: 10px; }
         .list .note-list li.dt .tags .tag {
-          background-color: #4BCA81;
+          background-color: #9BCE35;
           color: white;
-          padding: 2px 5px 2px 5px;
-          border-radius: 5px;
-          font-size: 1rem;
+          padding: 2px 8px;
+          border-radius: 2px;
+          font-size: .8rem;
           margin-right: .4rem; }
       .list .note-list li.dt .desc {
         margin: 0 10px;
@@ -186,7 +203,7 @@ html {
         position: absolute;
         right: 10px;
         top: 10px;
-        color: #CC1B40;
+        color: #525252;
         font-size: 16px;
         cursor: pointer; }
       .list .note-list li:hover .rm {
@@ -198,7 +215,8 @@ html {
   right: 0;
   bottom: 0;
   left: 384px;
-  background-color: #fff; }
+  background-color: #fff;
+  z-index: 10; }
   .content .btnbar {
     background-color: #0076DE;
     color: #fff;
@@ -214,7 +232,8 @@ html {
       font-size: 14px; }
       .content .btnbar i.icon-ok {
         float: right;
-        line-height: 22px; }
+        display: inline-block;
+        padding: 0 10px; }
       .content .btnbar i:hover {
         background-color: #0078D7;
         cursor: pointer; }
@@ -256,32 +275,55 @@ html {
       line-height: 28px;
       border: none;
       outline: none; }
-    .content .title div.tags {
-      width: 50%;
+    .content .title .tag-edit {
+      width: 400px;
+      position: absolute;
+      right: 0px;
+      border: 1px solid #e8e8e8;
+      padding: 10px;
+      top: 0px;
+      background-color: #fff;
+      z-index: 1001; }
+      .content .title .tag-edit div.tags {
+        padding: 5px; }
+        .content .title .tag-edit div.tags .close {
+          position: absolute;
+          right: 20px;
+          top: 10px;
+          font-size: 16px;
+          font-weight: 100;
+          color: #666; }
+        .content .title .tag-edit div.tags .tag {
+          padding: 2px 10px 2px 5px;
+          border: 1px solid #f1f1f1;
+          cursor: pointer;
+          margin-right: 8px;
+          margin-right: 5px; }
+        .content .title .tag-edit div.tags .on .tag:before {
+          content: '■';
+          color: #9BCE35;
+          font-size: 24px; }
+        .content .title .tag-edit div.tags .off .tag:before {
+          content: '□';
+          color: #9BCE35;
+          font-size: 24px; }
+      .content .title .tag-edit input {
+        width: 300px;
+        font-size: 14px;
+        padding-left: 8px; }
+    .content .title > div.tags {
       float: right;
-      text-align: right; }
-      .content .title div.tags span.tag {
-        background-color: #9BCE35;
-        color: white;
-        padding: 2px 5px 2px 5px;
-        border-radius: 5px;
-        font-size: 1rem;
-        margin-right: .4rem;
-        -webkit-transition: padding .2s linear; }
-      .content .title div.tags span.tag:hover {
-        padding: 2px 10px 2px 5px;
-        cursor: pointer; }
-        .content .title div.tags span.tag:hover:after {
-          font-family: "fontello";
-          margin-left: 5px;
-          content: '\e801'; }
-      .content .title div.tags input {
-        font-size: 1rem;
-        width: 8rem;
-        border: none;
-        outline: none; }
+      text-align: right;
+      margin-top: 6px; }
 
 .mark-down-section {
   height: 20px; }
+
+.tag {
+  padding: 2px 10px 2px 5px;
+  border: 1px solid #f1f1f1;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-right: 5px; }
 
 /*# sourceMappingURL=main.css.map */

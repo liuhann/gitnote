@@ -1,6 +1,25 @@
+
 /**
  * Created by liuhan on 2015/9/1.
  */
+
+function showMask() {
+    $(".mask").show();
+    $(".mask").css("opacity", "1");
+}
+
+function hideMask() {
+    $(".mask").css("opacity", 0);
+    setTimeout(function() {
+        $(".mask").hide();
+    }, 500);
+}
+
+$(function() {
+    $(".mask").click(function() {
+    closeEditTag();
+});
+});
 
 Date.prototype.format = function(fmt) {
     var o = {
@@ -34,7 +53,10 @@ Date.prototype.format = function(fmt) {
         }
     }
     return fmt;
-}
+};
+
+
+
 
 function formatMoney(number, places, symbol, thousand, decimal) {
     number = number || 0;
@@ -116,6 +138,30 @@ function traverse(dom) {
                 md += "\r" + $(this).text() + "\n";
             }
         }
+    });
+}
+
+
+function moveAnimate(element, newParent){
+    //Allow passing in either a jQuery object or selector
+    element = $(element);
+    newParent= $(newParent);
+
+    var oldOffset = element.offset();
+    element.appendTo(newParent);
+    var newOffset = element.offset();
+
+    var temp = element.clone().appendTo('body');
+    temp.css({
+        'position': 'absolute',
+        'left': oldOffset.left,
+        'top': oldOffset.top,
+        'z-index': 9999
+    });
+    element.hide();
+    temp.animate({'top': newOffset.top, 'left': newOffset.left}, 'fast', function(){
+        element.show();
+        temp.remove();
     });
 }
 
