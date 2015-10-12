@@ -85,7 +85,7 @@ html {
       line-height: 44px; }
     .sidebar i:hover {
       background-color: #DDEBF7; }
-    .sidebar i.icon-menu:before {
+    .sidebar i.icon-menu.on:before {
       background-color: #0076DE;
       color: #fff; }
     .sidebar i.icon-cog {
@@ -96,6 +96,73 @@ html {
 .navby {
   z-index: 9; }
 
+.nav-books {
+  width: 300px;
+  position: absolute;
+  left: 44px;
+  top: 0;
+  bottom: 0;
+  z-index: 9;
+  -webkit-transform: translateX(-300px);
+  -webkit-transition: -webkit-transform .3s ease-in;
+  border-right: 1px solid #ccc; }
+  .nav-books .headbar {
+    background-color: #0076DE;
+    color: #fff;
+    height: 44px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none; }
+    .nav-books .headbar i {
+      font-style: normal;
+      line-height: 44px;
+      padding: 12px;
+      font-size: 14px; }
+      .nav-books .headbar i.icon-ok {
+        float: right;
+        display: inline-block;
+        padding: 0 10px; }
+      .nav-books .headbar i:hover {
+        background-color: #0078D7;
+        cursor: pointer; }
+    .nav-books .headbar .addNote {
+      line-height: 44px;
+      font-style: normal;
+      font-size: 18px;
+      padding: 10px;
+      cursor: pointer; }
+      .nav-books .headbar .addNote:before {
+        margin-right: 10px;
+        font-size: 20px; }
+      .nav-books .headbar .addNote:hover {
+        background-color: #00AEEF; }
+  .nav-books .book-list .book {
+    margin: 8px 5px;
+    border: 1px solid #ccc;
+    border-left: 3px solid #EB7092;
+    padding-left: 10px;
+    border-radius: 5px;
+    position: relative; }
+    .nav-books .book-list .book .title {
+      font-size: 18px;
+      padding: 8px;
+      color: #444; }
+    .nav-books .book-list .book .total {
+      font-size: 12px;
+      padding: 3px 8px;
+      color: #888; }
+    .nav-books .book-list .book:after {
+      font-family: "fontello";
+      font-style: normal;
+      font-weight: normal;
+      content: '\e809';
+      position: absolute;
+      right: 16px;
+      top: 8px;
+      font-size: 28px;
+      color: #EB7092; }
+
 .list {
   position: absolute;
   left: 44px;
@@ -103,44 +170,40 @@ html {
   bottom: 0;
   width: 340px;
   border-right: 1px solid #E6E6E6;
-  z-index: 10; }
-  .list .search-wrap {
-    height: 44px;
+  z-index: 10;
+  -webkit-transition: transform .3s ease-in, opacity .3s ease-in;
+  transform-origin: left; }
+  .list .headbar {
     background-color: #0076DE;
-    color: #fff; }
-    .list .search-wrap input {
-      border: 0;
-      padding: 13px;
-      font-size: 16px;
-      background-color: #0076DE;
-      width: 295px;
-      color: #fff;
-      transition: background-color 0.3s cubic-bezier(1, 0.03, 0.85, 0.4); }
-      .list .search-wrap input:focus {
-        border: none;
-        outline: none; }
-    .list .search-wrap i.icon-search {
-      position: absolute;
-      left: 7px;
-      top: 7px;
-      font-size: 22px;
-      transition: transform .3s ease-in;
+    color: #fff;
+    height: 44px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none; }
+    .list .headbar i {
+      font-style: normal;
+      line-height: 44px;
+      padding: 12px;
+      font-size: 14px; }
+      .list .headbar i.icon-ok {
+        float: right;
+        display: inline-block;
+        padding: 0 10px; }
+      .list .headbar i:hover {
+        background-color: #0078D7;
+        cursor: pointer; }
+    .list .headbar .addNote {
+      line-height: 44px;
+      font-style: normal;
+      font-size: 18px;
+      padding: 10px;
       cursor: pointer; }
-    .list .search-wrap i.icon-cancel {
-      position: absolute;
-      right: 60px;
-      top: -40px;
-      cursor: pointer;
-      font-size: 22px;
-      transition: transform .3s ease-in; }
-    .list .search-wrap.in i.icon-search {
-      transform: translateX(220px);
-      color: #1664A7; }
-    .list .search-wrap.in i.icon-cancel {
-      transform: translateY(46px);
-      color: #1664A7; }
-    .list .search-wrap input::-webkit-input-placeholder {
-      color: #DDEBF7; }
+      .list .headbar .addNote:before {
+        margin-right: 10px;
+        font-size: 20px; }
+      .list .headbar .addNote:hover {
+        background-color: #00AEEF; }
   .list .note-list {
     position: absolute;
     top: 44px;
@@ -186,7 +249,7 @@ html {
       .list .note-list li.dt .tags {
         margin: 10px; }
         .list .note-list li.dt .tags .tag {
-          background-color: #9BCE35;
+          background-color: #4BCA81;
           color: white;
           padding: 2px 8px;
           border-radius: 2px;
@@ -216,8 +279,8 @@ html {
   bottom: 0;
   left: 384px;
   background-color: #fff;
-  z-index: 10; }
-  .content .btnbar {
+  -webkit-transition: left .3s ease-in; }
+  .content .headbar {
     background-color: #0076DE;
     color: #fff;
     height: 44px;
@@ -225,18 +288,29 @@ html {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none; }
-    .content .btnbar i {
+    .content .headbar i {
       font-style: normal;
       line-height: 44px;
       padding: 12px;
       font-size: 14px; }
-      .content .btnbar i.icon-ok {
+      .content .headbar i.icon-ok {
         float: right;
         display: inline-block;
         padding: 0 10px; }
-      .content .btnbar i:hover {
+      .content .headbar i:hover {
         background-color: #0078D7;
         cursor: pointer; }
+    .content .headbar .addNote {
+      line-height: 44px;
+      font-style: normal;
+      font-size: 18px;
+      padding: 10px;
+      cursor: pointer; }
+      .content .headbar .addNote:before {
+        margin-right: 10px;
+        font-size: 20px; }
+      .content .headbar .addNote:hover {
+        background-color: #00AEEF; }
   .content .editbox {
     overflow: auto;
     outline: none;

@@ -45,3 +45,53 @@ pre {
 ::-webkit-scrollbar-corner {
   background-color:#e6e6e6;
 }
+
+
+
+@mixin headbar {
+  .headbar {
+    background-color: #0076DE;
+    color: #fff;
+    height: 44px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    i {
+      font-style: normal;
+      line-height: 44px;
+      padding: 12px;
+      font-size: 14px;
+
+      &.icon-ok {
+        float: right;
+        display: inline-block;
+        padding: 0 10px;
+      }
+
+      &:hover {
+        background-color: #0078D7;
+        cursor: pointer;
+      }
+    }
+
+
+    .addNote {
+      line-height: 44px;
+      font-style: normal;
+      font-size: 18px;
+      padding: 10px;
+      cursor: pointer;
+      &:before {
+        margin-right: 10px;
+        font-size: 20px;
+      }
+      &:hover {
+        background-color: #00AEEF;
+      }
+    }
+
+
+  }
+}

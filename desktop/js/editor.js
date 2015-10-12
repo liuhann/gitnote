@@ -214,11 +214,17 @@ function __bindNote(cloned, note) {
     }
 }
 
-
 function openNote(note) {
     htmlMode();
     currentNote = note;
-    var md = fs.readFileSync(note.path + "/index.md", "utf8");
+
+    var md ;
+    if (fs.existsSync(note.path + "/autosave.index.md")) {
+        var md = fs.readFileSync(note.path + "/autosave.index.md", "utf8");
+    } else {
+        var md = fs.readFileSync(note.path + "/index.md", "utf8");
+    }
+
     $("#textBox").html(MdUtils.md2Html(md));
     currentNote.md = md;
     $("#note-title").val(note.title);
@@ -249,7 +255,6 @@ function removeNote(note) {
         $node.slideUp("fast").remove();
     });
 }
-
 
 function downloadFile(src, cb) {
     var filePath = currentNote.path + "/img/" + randStr(4) + ".png";
@@ -550,3 +555,35 @@ function closeEditTag() {
     $(".tag-edit").hide();
     hideMask();
 }
+
+
+function _toggleNoteList() {
+    if ($(".sidebar .icon-menu").hasClass("on")) {
+        $(".sidebar .icon-menu").removeClass("on");
+        $(".list").css("transform", "rotateY(90deg)");
+        //$(".list").css("opacity", "0");
+        $(".content").css("left", "44px");
+    } else {
+        $(".sidebar .icon-menu").addClass("on");
+        $(".list").css("transform", "rotateY(0deg)");
+        $(".list").css("opacity", "1");
+        $(".content").css("left", "384px");
+    }
+}
+
+
+function _toggleBooks() {
+
+    if (parseInt($(".content").css("left"))>600) {
+        $(".nav-books").css("-webkit-transform", "translateX(-300px)");
+        $(".list").css("transform", "translateX(0)");
+        $(".content").css("left", "384px");
+    } else {
+        $(".nav-books").css("-webkit-transform", "translateX(0)");
+        $(".list").css("transform", "translateX(300px)");
+        $(".content").css("left", "684px");
+    }
+
+
+}
+

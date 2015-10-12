@@ -2,6 +2,7 @@
 
 @import "common.scss";
 
+
 * {
   padding: 0;
   margin: 0;
@@ -22,8 +23,6 @@ html {
 
 li {
 }
-
-
 
 .sidebar {
   width: 44px;
@@ -60,7 +59,7 @@ li {
       background-color: #DDEBF7;
     }
 
-    &.icon-menu:before {
+    &.icon-menu.on:before {
       background-color: #0076DE;
       color: #fff;
     }
@@ -77,6 +76,59 @@ li {
     z-index: 9;
 }
 
+.nav-books {
+  width: 300px;
+  position: absolute;
+  left: 44px;
+  top: 0;
+  bottom: 0;
+  z-index: 9;
+  -webkit-transform: translateX(-300px);
+  -webkit-transition: -webkit-transform .3s ease-in;
+  border-right: 1px solid #ccc;
+
+  @include headbar;
+
+  .book-list {
+    .book {
+      margin: 8px 5px;
+      border: 1px solid #ccc;
+      border-left: 3px solid #EB7092;
+      padding-left: 10px;
+      border-radius: 5px;
+
+      position: relative;
+      .title {
+        font-size: 18px;
+        padding: 8px;
+        color: #444;
+      }
+
+      .total {
+        font-size: 12px;
+        padding: 3px 8px;
+        color: #888;
+      }
+
+      &:after {
+        font-family: "fontello";
+        font-style: normal;
+        font-weight: normal;
+        content: '\e809';
+        position: absolute;
+        right: 16px;
+        top: 8px;
+        font-size: 28px;
+        color: #EB7092;
+      }
+    }
+  }
+
+
+
+}
+
+
 .list {
   position: absolute;
   left: 44px;
@@ -85,59 +137,10 @@ li {
   width: 340px;
   border-right: 1px solid #E6E6E6;
   z-index: 10;
-  .search-wrap {
-    height: 44px;
-    background-color: #0076DE;
-    color: #fff;
+  -webkit-transition: transform .3s ease-in, opacity .3s ease-in;
+  transform-origin: left;
 
-    input {
-      border: 0;
-      padding: 13px;
-      font-size: 16px;
-      background-color: #0076DE;
-      width: 295px;
-      color: #fff;
-      transition: background-color .3s cubic-bezier(1, 0.03, 0.85, 0.4);
-
-      &:focus {
-        border: none;
-        outline: none;
-      }
-    }
-
-    i.icon-search {
-      position: absolute;
-      left: 7px;
-      top: 7px;
-      font-size: 22px;
-      transition: transform .3s ease-in;
-      cursor: pointer;
-    }
-
-    i.icon-cancel {
-      position: absolute;
-      right: 60px;
-      top: -40px;
-      cursor: pointer;
-      font-size: 22px;
-      transition: transform .3s ease-in;
-    }
-
-    &.in {
-      i.icon-search {
-        transform: translateX(220px);
-        color: #1664A7;
-      }
-      i.icon-cancel {
-        transform: translateY(46px);
-        color: #1664A7;
-      }
-    }
-
-    input::-webkit-input-placeholder {
-      color: #DDEBF7;
-    }
-  }
+  @include headbar;
 
   .note-list {
     position: absolute;
@@ -197,7 +200,7 @@ li {
           margin:10px;
 
           .tag {
-            background-color: #9BCE35;
+            background-color: #4BCA81;
             color: white;
             padding: 2px 8px;
             border-radius: 2px;
@@ -241,34 +244,9 @@ li {
   bottom: 0;
   left: 384px;
   background-color: #fff;
-  z-index: 10;
-  .btnbar {
-    background-color: #0076DE;
-    color: #fff;
-    height: 44px;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+  -webkit-transition: left .3s ease-in;
 
-    i {
-      font-style: normal;
-      line-height: 44px;
-      padding: 12px;
-      font-size: 14px;
-
-      &.icon-ok {
-        float: right;
-        display: inline-block;
-        padding: 0 10px;
-      }
-
-      &:hover {
-        background-color: #0078D7;
-        cursor: pointer;
-      }
-    }
-  }
+  @include headbar;
 
   .editbox {
     overflow: auto;

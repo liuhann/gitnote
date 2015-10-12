@@ -21,24 +21,50 @@
 <body >
 
 <div class="sidebar">
-    <i class="icon-menu"></i>
-    <i class="icon-plus" onclick="newNote();"></i>
+    <i class="icon-menu on" onclick="_toggleNoteList();"></i>
     <i class="icon-tag"></i>
+    <i class="icon-wallet" onclick="_toggleBooks();"></i>
     <i class="icon-trash"></i>
-
     <i class="icon-params bot"></i>
 </div>
 
-<div class="navby">
+<div class="nav-books">
+    <div class="headbar">
+        <i class="icon-plus addNote" onclick="newBook();">创建笔记本</i>
+    </div>
+
+    <div class="book-list">
+        <ul>
+            <li class="default book">
+                <div class="title">
+                    默认笔记本
+                </div>
+                <div class="total">
+                    12个笔记
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+
 
 </div>
 
-<div class="list">
-    <div class="search-wrap">
-        <input id="search-text" type="text" placeholder="搜索当前目录">
-        <i class="icon-search-1"></i>
-    </div>
 
+<div class="nav-tags"></div>
+
+<div class="list">
+    <div class="headbar">
+
+        <i class="icon-plus addNote" onclick="newNote();">新增笔记</i>
+        <!--
+        <input id="search-text" type="text" placeholder="搜索当前目录">
+        -->
+        <!--
+        <i class="icon-search-1"></i>
+        -->
+    </div>
     <div class="note-list">
         <ul>
             <li class="tpd template">
@@ -60,7 +86,7 @@
 </div>
 
 <div class="content">
-    <div class="btnbar">
+    <div class="headbar">
         <!--
         <i class="icon-cw" tabindex="-1" onclick="formatDoc('redo');"></i>
         <i class="icon-ccw" onclick="formatDoc('undo');"></i>

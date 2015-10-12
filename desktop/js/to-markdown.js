@@ -133,7 +133,7 @@ function getContent(node) {
     else if (node.childNodes[i].nodeType === 3) {
       text += node.childNodes[i].data;
     }
-    else { continue; }
+    else {  }
   }
   return text;
 }
@@ -438,7 +438,7 @@ module.exports = [
   },
 
   {
-    filter:['span',"abbr",'aside', 'table', 'tbody'],
+    filter:['span',"abbr",'aside', 'table', 'tbody', 'dfn'],
     replacement: function (content) {
       return  content ;
     }
