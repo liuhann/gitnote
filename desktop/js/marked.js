@@ -611,7 +611,7 @@ InlineLexer.prototype.output = function(src) {
         ? this.options.sanitizer
           ? this.options.sanitizer(cap[0])
           : escape(cap[0])
-        : cap[0]
+        : cap[0];
       continue;
     }
 
@@ -858,6 +858,7 @@ Renderer.prototype.codespan = function(text) {
   return '<code>' + text + '</code>';
 };
 
+
 Renderer.prototype.br = function() {
   return this.options.xhtml ? '<br/>' : '<br>';
 };
@@ -1072,7 +1073,13 @@ Parser.prototype.tok = function() {
       return this.renderer.html(html);
     }
     case 'paragraph': {
-      return this.renderer.paragraph(this.inline.output(this.token.text));
+      var output = this.inline.output(this.token.text);
+      if (output.indexOf('<code>')>-1) {
+        output = output.replace(/\n/g, '\r\n');
+        return "<PRE> " + output + "</PRE>";
+      } else {
+        return this.renderer.paragraph(output);
+      }
     }
     case 'text': {
       return this.renderer.paragraph(this.parseText());

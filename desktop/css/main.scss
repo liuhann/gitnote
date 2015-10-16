@@ -2,7 +2,6 @@
 
 @import "common.scss";
 
-
 * {
   padding: 0;
   margin: 0;
@@ -77,13 +76,13 @@ li {
 }
 
 .nav-books {
-  width: 300px;
+  width: 220px;
   position: absolute;
   left: 44px;
   top: 0;
   bottom: 0;
-  z-index: 9;
-  -webkit-transform: translateX(-300px);
+  z-index: -1;
+  -webkit-transform: translateX(-100px);
   -webkit-transition: -webkit-transform .3s ease-in;
   border-right: 1px solid #ccc;
 
@@ -92,10 +91,12 @@ li {
   .book-list {
     .book {
       margin: 8px 5px;
-      border: 1px solid #ccc;
+      width: 200px;
+      border: 1px solid #EB7092;
       border-left: 3px solid #EB7092;
       padding-left: 10px;
       border-radius: 5px;
+      background-color: #fff;
 
       position: relative;
       .title {
@@ -110,6 +111,49 @@ li {
         color: #888;
       }
 
+      .label {
+        position: absolute;
+        right: -3px;
+        border: 1px solid #EB7092;
+        top: 15px;
+        width: 20px;
+        height: 30px;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        background-color: #fff;
+
+        .ico-round {
+          margin: 10px 4px;
+          width: 10px;
+          height: 10px;
+          border: 1px solid #EB7092;
+          border-radius: 50%;
+        }
+      }
+
+      &.opened {
+        .title {
+          color: #EB7092;
+        }
+        .label {
+          /** -webkit-transition: transform .3s ease-in; */
+          -webkit-transform-origin-x: right;
+          -webkit-transform: scaleX(-1) translateX(8px);
+          background-color: white;
+          z-index: -1;
+        }
+      }
+
+      input {
+        font-size: 18px;
+        padding: 8px;
+        color: #444;
+        width: 150px;
+        border: none;
+        outline: none;
+      }
+
+      /*
       &:after {
         font-family: "fontello";
         font-style: normal;
@@ -121,13 +165,10 @@ li {
         font-size: 28px;
         color: #EB7092;
       }
+      */
     }
   }
-
-
-
 }
-
 
 .list {
   position: absolute;
@@ -140,6 +181,7 @@ li {
   -webkit-transition: transform .3s ease-in, opacity .3s ease-in;
   transform-origin: left;
 
+  background-color: #fff;
   @include headbar;
 
   .note-list {

@@ -30,7 +30,7 @@
 
 <div class="nav-books">
     <div class="headbar">
-        <i class="icon-plus addNote" onclick="newBook();">创建笔记本</i>
+        <i class="icon-plus addNote" onclick="_newBook();">创建笔记本</i>
     </div>
 
     <div class="book-list">
@@ -42,13 +42,12 @@
                 <div class="total">
                     12个笔记
                 </div>
+                <div class="label">
+                    <div class="ico-round"></div>
+                </div>
             </li>
-
         </ul>
-
     </div>
-
-
 </div>
 
 
@@ -86,7 +85,7 @@
 </div>
 
 <div class="content">
-    <div class="headbar">
+    <div class="headbar editor-btns">
         <!--
         <i class="icon-cw" tabindex="-1" onclick="formatDoc('redo');"></i>
         <i class="icon-ccw" onclick="formatDoc('undo');"></i>
@@ -101,7 +100,7 @@
         <i class=" icon-right-open" onclick="formatDoc('formatblock','blockquote');"></i>
 
         <i class="icon-link" onclick="var sLnk=prompt('请输入链接地址','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}"></i>
-        <i class="icon-code" ></i>
+        <i class="icon-code" onclick="formatDoc('inserthtml', '<PRE><CODE></CODE></PRE>')"></i>
         <i class="mode-md" onclick="mdMode();">MD文本模式</i>
         <i class="hidden mode-rtf" onclick="htmlMode();">图文模式</i>
         <i class="icon-ok" onclick="saveNote();">保存</i>
@@ -130,7 +129,6 @@
                 </div>
             </div>
             <input placeholder="输入标签名" id="new-tag">
-
         </div>
     </div>
 </div>

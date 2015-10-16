@@ -92,6 +92,8 @@ function listNotes() {
 
             /**read note info from meta*/
             for(var i=0; i<files.length; i++) {
+                /**filter out the folder name without 'note-'*/
+                if (files[i].indexOf("note-")===-1)  continue;
                 var path = rootPath + files[i] + "/meta.md";
                 if(fs.existsSync(path)) {
                     var md = fs.readFileSync(path, "utf8");
@@ -109,7 +111,6 @@ function listNotes() {
                     return 0;
                 }
             });
-
             /**display notes*/
             for(var i=0; i<notes.length; i++) {
                 /**init all tags*/
@@ -126,8 +127,6 @@ function listNotes() {
             }
         }
 
-        console.log(allTags);
-
         if (notes.length>0) {
             /**open the recentest note by default*/
             currentNote = notes[notes.length-1];
@@ -140,6 +139,8 @@ function listNotes() {
     });
 }
 
+
+
 /***
  * Update note info on the navigation list
  * @param note
@@ -147,9 +148,7 @@ function listNotes() {
  */
 function _updateNote(note) {
     var noteListEntry = $("#" + note.path.slice(note.path.lastIndexOf("/")+1));
-
     __bindNote(noteListEntry, note);
-
     if ($(".note-list li.dt").index(noteListEntry)>0) {
         noteListEntry.prependTo(noteListEntry.parent());
     }
@@ -321,9 +320,6 @@ function newNote(template) {
     });
 }
 
-
-
-
 function saveNote(autoSave) {
     var md = MdUtils.html2Md($("#textBox").html());
     var meta = {
@@ -351,6 +347,7 @@ function saveNote(autoSave) {
     currentNote.length = meta.length;
     currentNote.modified = meta.modified;
     currentNote.title = meta.title;
+    currentNote.desc = meta.desc;
 
     if (autoSave) {
         if (md!=currentNote.md) {
@@ -378,74 +375,6 @@ function saveNote(autoSave) {
     }
 }
 
-
-
-var MdUtils = {
-
-    //plat line object to md
-    object2Md: function(o) {
-        var md = "";
-        for(k in o) {
-            md += k + ":" + o[k] + "\r\n";
-        }
-        return md;
-    },
-
-    md2Object: function(md) {
-        var lines = md.split("\n");
-        var o = {};
-        for(var i=0;i<lines.length; i++) {
-            var sep = lines[i].indexOf(":");
-            if (sep>-1) {
-                o[lines[i].substring(0, sep)] = lines[i].substring(sep+1);
-            }
-        }
-        return o;
-    },
-
-    md2RawText: function(md) {
-        md.replace(/ *#{1,6}/g, "").replace(/!\[\]\([^\)]*\)/g, "")
-            .replace(/\([^\)]*\)/g, "");
-        return md;
-    },
-
-    getMdPics: function(md) {
-        var ls =  md.match(/!\[\]\([^\)]*\)/g);
-        if (ls==null) return null;
-        var rs = [];
-        for(var i=0; i<ls.length; i++) {
-            rs.push(ls[i].substring(ls[i].lastIndexOf("/") + 1, ls[i].length-1));
-        }
-        return rs;
-    },
-
-    getMeta: function(md) {
-        var lines = md.split("\n");
-
-        var metas = {};
-        for(var i=0;i<lines.length; i++) {
-            if (lines[i].indexOf(MdUtils.metaEnd)>-1) {
-                break;
-            } else {
-                if (lines[i].indexOf(":")>-1) {
-                    var splits = lines[i].split(":");
-                    metas[splits[0]] = splits[1];
-                }
-            }
-        }
-        return metas;
-    },
-
-    html2Md: function(html) {
-        return toMarkdown(html);
-    },
-
-    md2Html: function(md) {
-        return marked(md);
-    }
-};
-
-
 function mdMode() {
     $("#textBox").hide();
     $("#mdbox").show();
@@ -453,9 +382,9 @@ function mdMode() {
     var text = MdUtils.html2Md($("#textBox").html());
     $("#mdbox textarea").val(text);
 
-    $(".btnbar i").hide();
-    $(".btnbar i.mode-rtf").show();
-    $(".btnbar i.icon-ok").show();
+    $(".editor-btns i").hide();
+    $(".editor-btns i.mode-rtf").show();
+    $(".editor-btns i.icon-ok").show();
 }
 
 function htmlMode() {
@@ -467,11 +396,10 @@ function htmlMode() {
     var html = MdUtils.md2Html(md);
     $("#textBox").html(html);
 
-    $(".btnbar i").show();
-    $(".btnbar i.mode-rtf").hide();
-    $(".btnbar i.icon-ok").show();
+    $(".editor-btns i").show();
+    $(".editor-btns i.mode-rtf").hide();
+    $(".editor-btns i.icon-ok").show();
 }
-
 
 function editTag() {
     $(".tag-edit").show();
@@ -532,6 +460,7 @@ function editTag() {
     }
 }
 
+
 function saveEditTag() {
     var tags = [];
     $(".tag-edit .on .tag").each(function() {
@@ -556,7 +485,6 @@ function closeEditTag() {
     hideMask();
 }
 
-
 function _toggleNoteList() {
     if ($(".sidebar .icon-menu").hasClass("on")) {
         $(".sidebar .icon-menu").removeClass("on");
@@ -573,17 +501,36 @@ function _toggleNoteList() {
 
 
 function _toggleBooks() {
-
-    if (parseInt($(".content").css("left"))>600) {
-        $(".nav-books").css("-webkit-transform", "translateX(-300px)");
+    if (parseInt($(".content").css("left"))>500) {
+        $(".nav-books").css("-webkit-transform", "translateX(-100px)");
         $(".list").css("transform", "translateX(0)");
         $(".content").css("left", "384px");
     } else {
         $(".nav-books").css("-webkit-transform", "translateX(0)");
-        $(".list").css("transform", "translateX(300px)");
-        $(".content").css("left", "684px");
+        $(".list").css("transform", "translateX(220px)");
+        $(".content").css("left", "604px");
     }
 
-
+    $(".book-list .book").click(function() {
+       if ($(this).hasClass("opened"))  {
+           $(this).removeClass("opened");
+       } else {
+           $(this).addClass("opened");
+       }
+    });
 }
 
+function _newBook() {
+    $(".book-list li.book.opened").removeClass("opened");
+    var cl = $(".book-list li.default.book").clone().removeClass("default").addClass("opened");
+
+    $(cl).find(".title").replaceWith("<input class='in-book-title' placeholder='输入新的笔记本名称'>");
+    var save = $("<a class='btn-save-book'>保存</a>");
+    save.click(function() {
+
+
+    });
+    $(cl).find(".total").replaceWith("<a>保存</a>");
+
+    $(".book-list ul").append(cl);
+}

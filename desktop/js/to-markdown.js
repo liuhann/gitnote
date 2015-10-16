@@ -297,7 +297,7 @@ module.exports = [
   {
     filter: 'br',
     replacement: function () {
-      return '\n';
+      return '\r\n';
     }
   },
   {
@@ -365,7 +365,7 @@ module.exports = [
              node.firstChild.nodeName === 'CODE';
     },
     replacement: function(content, node) {
-      return '\n\n```\n' + node.firstChild.textContent + '\n```\n\n';
+      return '\r\n\r\n```\r\n' + node.firstChild.textContent + '\r\n```\r\n\r\n';
     }
   },
 
@@ -378,7 +378,7 @@ module.exports = [
     },
     replacement: function (content, node) {
       var language = node.parentNode.className.match(highlightRegEx)[1];
-      return '\n\n```' + language + '\n' + node.textContent + '\n```\n\n';
+      return '\r\n\r\n```' + language + '\n' + node.textContent + '\n```\r\n\r\n';
     }
   },
 
@@ -388,7 +388,7 @@ module.exports = [
              highlightRegEx.test(node.className);
     },
     replacement: function (content) {
-      return '\n\n' + content + '\n\n';
+      return '\r\n\r\n' + content + '\r\n\r\n';
     }
   }
 ];
@@ -400,14 +400,14 @@ module.exports = [
   {
     filter: 'p',
     replacement: function (content) {
-      return '\n\n' + content + '\n\n';
+      return '\r\n' + content + '\r\n\r\n';
     }
   },
 
   {
     filter: 'br',
     replacement: function () {
-      return '  \n';
+      return '  \r\n';
     }
   },
 
@@ -419,14 +419,14 @@ module.exports = [
       for(var i = 0; i < hLevel; i++) {
         hPrefix += '#';
       }
-      return '\n\n' + hPrefix + ' ' + content + '\n\n';
+      return '\r\n\r\n' + hPrefix + ' ' + content + '\r\n\r\n';
     }
   },
 
   {
     filter: 'hr',
     replacement: function () {
-      return '\n\n* * *\n\n';
+      return '\r\n\r\n* * *\r\n\r\n';
     }
   },
 
@@ -447,7 +447,7 @@ module.exports = [
     {
         filter:['pre','div','header','tr', 'td'],
         replacement: function (content) {
-            return  content + '\n' ;
+            return  content + '\r\n\r\n';
         }
     },
 

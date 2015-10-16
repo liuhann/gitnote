@@ -18,8 +18,30 @@ function hideMask() {
 $(function() {
     $(".mask").click(function() {
     closeEditTag();
+    });
+
+    $("textarea").on('keydown',function(e){
+        if(e.keyCode == 9){
+            e.preventDefault();
+            var indent = '    ';
+            var start = this.selectionStart;
+            var end = this.selectionEnd;
+            var selected = window.getSelection().toString();
+            selected = indent + selected.replace(/\n/g,'\n'+indent);
+            this.value = this.value.substring(0,start) + selected + this.value.substring(end);
+            this.setSelectionRange(start+indent.length,start+selected.length);
+        }
+    });
+
+    $("[contenteditable='true']").on("keydown", function(e) {
+        if(e.keyCode == 9){
+            e.preventDefault();
+        }
+    });
 });
-});
+
+
+
 
 Date.prototype.format = function(fmt) {
     var o = {
@@ -54,9 +76,6 @@ Date.prototype.format = function(fmt) {
     }
     return fmt;
 };
-
-
-
 
 function formatMoney(number, places, symbol, thousand, decimal) {
     number = number || 0;
@@ -164,4 +183,73 @@ function moveAnimate(element, newParent){
         temp.remove();
     });
 }
+
+
+
+var MdUtils = (function () {
+    var mu = {
+        //plat line object to md
+        object2Md: function(o) {
+            var md = "";
+            for(k in o) {
+                md += k + ":" + o[k] + "\r\n";
+            }
+            return md;
+        },
+
+        md2Object: function(md) {
+            var lines = md.split("\n");
+            var o = {};
+            for(var i=0;i<lines.length; i++) {
+                var sep = lines[i].indexOf(":");
+                if (sep>-1) {
+                    o[lines[i].substring(0, sep)] = lines[i].substring(sep+1);
+                }
+            }
+            return o;
+        },
+
+        md2RawText: function(md) {
+            var raw = md.replace(/ *#{1,6}/g, "").replace(/!\[\]\([^\)]*\)/g, "")
+                .replace(/\([^\)]*\)/g, "");
+            return raw;
+        },
+
+        getMdPics: function(md) {
+            var ls =  md.match(/!\[\]\([^\)]*\)/g);
+            if (ls==null) return null;
+            var rs = [];
+            for(var i=0; i<ls.length; i++) {
+                rs.push(ls[i].substring(ls[i].lastIndexOf("/") + 1, ls[i].length-1));
+            }
+            return rs;
+        },
+
+        getMeta: function(md) {
+            var lines = md.split("\n");
+
+            var metas = {};
+            for(var i=0;i<lines.length; i++) {
+                if (lines[i].indexOf(MdUtils.metaEnd)>-1) {
+                    break;
+                } else {
+                    if (lines[i].indexOf(":")>-1) {
+                        var splits = lines[i].split(":");
+                        metas[splits[0]] = splits[1];
+                    }
+                }
+            }
+            return metas;
+        },
+
+        html2Md: function(html) {
+            return toMarkdown(html);
+        },
+
+        md2Html: function(md) {
+            return marked(md);
+        }
+    };
+    return mu;
+}());
 
