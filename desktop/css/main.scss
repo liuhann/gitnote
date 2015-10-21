@@ -131,6 +131,11 @@ li {
         }
       }
 
+      a.btn-save-book {
+        display: block;
+        padding: 3px 8px;
+      }
+
       &.opened {
         .title {
           color: #EB7092;
@@ -190,6 +195,14 @@ li {
     bottom: 0;
     overflow-y: auto;
     width: 339px;
+
+    .empty {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 200px;
+      text-align: center;
+    }
 
     li {
       overflow: hidden;

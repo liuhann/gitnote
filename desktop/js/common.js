@@ -15,33 +15,6 @@ function hideMask() {
     }, 500);
 }
 
-$(function() {
-    $(".mask").click(function() {
-    closeEditTag();
-    });
-
-    $("textarea").on('keydown',function(e){
-        if(e.keyCode == 9){
-            e.preventDefault();
-            var indent = '    ';
-            var start = this.selectionStart;
-            var end = this.selectionEnd;
-            var selected = window.getSelection().toString();
-            selected = indent + selected.replace(/\n/g,'\n'+indent);
-            this.value = this.value.substring(0,start) + selected + this.value.substring(end);
-            this.setSelectionRange(start+indent.length,start+selected.length);
-        }
-    });
-
-    $("[contenteditable='true']").on("keydown", function(e) {
-        if(e.keyCode == 9){
-            e.preventDefault();
-        }
-    });
-});
-
-
-
 
 Date.prototype.format = function(fmt) {
     var o = {
@@ -77,90 +50,6 @@ Date.prototype.format = function(fmt) {
     return fmt;
 };
 
-function formatMoney(number, places, symbol, thousand, decimal) {
-    number = number || 0;
-    places = !isNaN(places = Math.abs(places)) ? places : 2;
-    symbol = symbol !== undefined ? symbol : "￥";
-    thousand = (thousand=="")?"":",";
-    decimal = decimal || ".";
-    var negative = number < 0 ? "-" : "",
-        i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
-        j = (j = i.length) > 3 ? j % 3 : 0;
-    return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
-}
-
-function randStr(len){
-    var x="123456789poiuytrewqasdfghjklmnbvcxzQWERTYUIPLKJHGFDSAZXCVBNM";
-    var tmp="";
-    var ran = Math.random();
-    for(var i=0;i< len;i++) {
-        ran *=10;
-        tmp += x.charAt(Math.ceil(ran)%x.length);
-    }
-    return tmp;
-}
-
-//自己写的md 解析器。
-function traverse(dom) {
-    $(dom).contents().each(function() {
-        if (3===this.typeName) {
-            md += $(this).text() + "\n";
-        } else {
-            if ("LI"===$(this).tagName()) {
-                if ($(this).parents("blockquote").length>-1) {
-                    md += "> ";
-                }
-                if ("OL"===$(this).parent().tagName()) {
-                    md += $(this).sibling().index($(this)) + ". " + $(this).text() + "\n";
-                }
-                if ("UL"===$(this).parent().tagName()) {
-                    md +=  "- " + $(this).text() + "\n";
-                }
-                return;
-            }
-
-            if ("PRE"===$(this).tagName()) {
-                md += "    " + $(this).text().replace( new RegExp( "\\n", "g" ), "\n    ");
-                return;
-            }
-
-            if ("H1"===$(this).tagName()) {
-                md += "\r# " + $(this).text() + "\n";
-                return;
-            }
-            if ("H2"===$(this).tagName()) {
-                md += "\r## " + $(this).text() + "\n";
-                return;
-            }
-            if ("H3"===$(this).tagName()) {
-                md += "\r### " + $(this).text() + "\n";
-                return;
-            }
-            if ("H4"===$(this).tagName()) {
-                md += "\r#### " + $(this).text() + "\n";
-                return;
-            }
-            if ("H5"===$(this).tagName()) {
-                md += "\r##### " + $(this).text() + "\n";
-                return;
-            }
-
-
-            if ($(this).children().length>0) {
-                traverse($(this));
-            } else {
-                if ("BLOCKQUOTE"===$(this).tagName()) {
-                    md += "> " + $(this).text() + "\n";
-                    return;
-                }
-
-                md += "\r" + $(this).text() + "\n";
-            }
-        }
-    });
-}
-
-
 function moveAnimate(element, newParent){
     //Allow passing in either a jQuery object or selector
     element = $(element);
@@ -185,6 +74,78 @@ function moveAnimate(element, newParent){
 }
 
 
+var logger = (function(console) {
+    function log(msg) {
+        console.log(msg);
+    }
+    return {
+        log: log,
+        error: log,
+        info: log,
+        debug: log
+    };
+}(console));
+
+
+var Dialog = (function($) {
+
+    function showAlert(msg) {
+        alert(msg);
+    }
+
+    return {
+        alert: showAlert
+    }
+}($));
+
+
+var StringUtils = (function() {
+    function randomStr(len) {
+        var x="123456789poiuytrewqasdfghjklmnbvcxzQWERTYUIPLKJHGFDSAZXCVBNM";
+        var tmp="";
+        var ran = Math.random();
+        for(var i=0;i< len;i++) {
+            ran *=10;
+            tmp += x.charAt(Math.ceil(ran)%x.length);
+        }
+        return tmp;
+    }
+
+    var FILE_NAME_REGEX = '(?!((^(con)$)|^(con)/..*|(^(prn)$)|^(prn)/..*|(^(aux)$)|^(aux)/..*|(^(nul)$)|^(nul)/..*|(^(com)[1-9]$)|^(com)[1-9]/..*|(^(lpt)[1-9]$)|^(lpt)[1-9]/..*)|^/s+|.*/s$)(^[^/////:/*/?/"/</>/|]{1,255}$)';
+
+    function isFileName(name) {
+        return name.match(FILE_NAME_REGEX);
+    }
+
+    String.prototype.between = function(sa, so) {
+        var sfr = this.indexOf(sa);
+        if (sfr==-1) return "";
+
+        var sfo = this.indexOf(so, sfr + sa.length);
+
+        if (sfo>-1) {
+            return this.substring(sfr+sa.length, sfo);
+        } else {
+            return "";
+        }
+    };
+
+    String.prototype.getFileExt = function() {
+        var li = this.lastIndexOf(".");
+        if (li===-1) return "";
+        return this.substring(li+1);
+    };
+
+    String.prototype.getFileName = function () {
+        return this.substring(this.lastIndexOf("/")+1);
+    };
+
+    return {
+        randomStr: randomStr,
+        isFileName: isFileName
+    };
+}());
+
 
 var MdUtils = (function () {
     var mu = {
@@ -198,7 +159,7 @@ var MdUtils = (function () {
         },
 
         md2Object: function(md) {
-            var lines = md.split("\n");
+            var lines = md.split("\r\n");
             var o = {};
             for(var i=0;i<lines.length; i++) {
                 var sep = lines[i].indexOf(":");
@@ -211,23 +172,22 @@ var MdUtils = (function () {
 
         md2RawText: function(md) {
             var raw = md.replace(/ *#{1,6}/g, "").replace(/!\[\]\([^\)]*\)/g, "")
-                .replace(/\([^\)]*\)/g, "");
+                .replace(/\([^\)]*\)/g, "").replace(/\\n\\r/g, "");
             return raw;
         },
 
         getMdPics: function(md) {
             var ls =  md.match(/!\[\]\([^\)]*\)/g);
-            if (ls==null) return null;
+            if (ls==null) return [];
             var rs = [];
             for(var i=0; i<ls.length; i++) {
-                rs.push(ls[i].substring(ls[i].lastIndexOf("/") + 1, ls[i].length-1));
+                rs.push(ls[i].between("](", ")"));
             }
             return rs;
         },
 
         getMeta: function(md) {
             var lines = md.split("\n");
-
             var metas = {};
             for(var i=0;i<lines.length; i++) {
                 if (lines[i].indexOf(MdUtils.metaEnd)>-1) {
@@ -246,10 +206,19 @@ var MdUtils = (function () {
             return toMarkdown(html);
         },
 
+        /**将外链资源部分转换为本地数据*/
+        shortenMd: function(md) {
+            var pics = this.getMdPics(md);
+            for(var i=0; i<pics.length; i++) {
+                if (pics.indexOf("http")===-1) {
+                    //local image
+                }
+            }
+        },
+
         md2Html: function(md) {
             return marked(md);
         }
     };
     return mu;
 }());
-

@@ -183,6 +183,9 @@ html {
         height: 10px;
         border: 1px solid #EB7092;
         border-radius: 50%; }
+    .nav-books .book-list .book a.btn-save-book {
+      display: block;
+      padding: 3px 8px; }
     .nav-books .book-list .book.opened .title {
       color: #EB7092; }
     .nav-books .book-list .book.opened .label {
@@ -247,6 +250,12 @@ html {
     bottom: 0;
     overflow-y: auto;
     width: 339px; }
+    .list .note-list .empty {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 200px;
+      text-align: center; }
     .list .note-list li {
       overflow: hidden;
       position: relative;

@@ -6,42 +6,42 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script>
         window.$ = window.jQuery = require('jquery');
+        var http = require('http');
+        var fs = require('fs');
+
     </script>
     <script src="js/common.js"></script>
     <script src="js/to-markdown.js"></script>
-
     <script src="js/marked.js"></script>
+
+    <script src="js/note.service.js"></script>
+    <script src="js/book.service.js"></script>
     <script src="js/editor.js"></script>
 
-    <link href="css/main.css" media="all" rel="stylesheet" />
-    <link href="css/fontello.css" media="all" rel="stylesheet" />
-    <link href="css/markdown.css" media="all" rel="stylesheet" />
-
+    <link href="css/main.css" media="all" rel="stylesheet"/>
+    <link href="css/fontello.css" media="all" rel="stylesheet"/>
+    <link href="css/markdown.css" media="all" rel="stylesheet"/>
 </head>
-<body >
+<body>
 
 <div class="sidebar">
-    <i class="icon-menu on" onclick="_toggleNoteList();"></i>
+    <i class="icon-menu on" onclick="noteService.showNotes();"></i>
     <i class="icon-tag"></i>
-    <i class="icon-wallet" onclick="_toggleBooks();"></i>
+    <i class="icon-wallet" onclick="bookService.toggleBook();"></i>
     <i class="icon-trash"></i>
     <i class="icon-params bot"></i>
 </div>
 
 <div class="nav-books">
     <div class="headbar">
-        <i class="icon-plus addNote" onclick="_newBook();">创建笔记本</i>
+        <i class="icon-plus addNote" onclick="bookService.newBook();">创建笔记本</i>
     </div>
 
     <div class="book-list">
         <ul>
-            <li class="default book">
-                <div class="title">
-                    默认笔记本
-                </div>
-                <div class="total">
-                    12个笔记
-                </div>
+            <li class="template book">
+                <div class="title"></div>
+                <div class="total"></div>
                 <div class="label">
                     <div class="ico-round"></div>
                 </div>
@@ -56,7 +56,7 @@
 <div class="list">
     <div class="headbar">
 
-        <i class="icon-plus addNote" onclick="newNote();">新增笔记</i>
+        <i class="icon-plus addNote" onclick="noteService.newNote();">新增笔记</i>
         <!--
         <input id="search-text" type="text" placeholder="搜索当前目录">
         -->
@@ -81,6 +81,10 @@
                 </div>
             </li>
         </ul>
+
+        <div class="empty">
+            空白的笔记本
+        </div>
     </div>
 </div>
 
@@ -95,15 +99,16 @@
         <!--
         <i class="icon-fire" onclick="formatDoc('inserthtml', '<hr/><br>');"></i>
         -->
-        <i class="icon-list-numbered"  onclick="formatDoc('insertorderedlist');"></i>
-        <i class="icon-list-bullet"  onclick="formatDoc('insertunorderedlist');"></i>
+        <i class="icon-list-numbered" onclick="formatDoc('insertorderedlist');"></i>
+        <i class="icon-list-bullet" onclick="formatDoc('insertunorderedlist');"></i>
         <i class=" icon-right-open" onclick="formatDoc('formatblock','blockquote');"></i>
 
-        <i class="icon-link" onclick="var sLnk=prompt('请输入链接地址','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}"></i>
+        <i class="icon-link"
+           onclick="var sLnk=prompt('请输入链接地址','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}"></i>
         <i class="icon-code" onclick="formatDoc('inserthtml', '<PRE><CODE></CODE></PRE>')"></i>
-        <i class="mode-md" onclick="mdMode();">MD文本模式</i>
-        <i class="hidden mode-rtf" onclick="htmlMode();">图文模式</i>
-        <i class="icon-ok" onclick="saveNote();">保存</i>
+        <i class="mode-md" onclick="noteService.mdMode();">MD文本模式</i>
+        <i class="hidden mode-rtf" onclick="noteService.htmlMode();">图文模式</i>
+        <i class="icon-ok" onclick="noteService.saveNote();">保存</i>
     </div>
     <div id="textBox" contenteditable="true" class="markdown-body editbox">
     </div>
@@ -114,16 +119,19 @@
 
     <div class="title">
         <input type="text" id="note-title" placeholder="请输入标题" value="">
+
         <div class="tags"><a onclick='editTag();'>管理标签</a></div>
 
         <div class="tag-edit hidden focus-pop">
             <div class="tags">
                 <h5>标签列表</h5>
                 <a class="close" onclick="saveEditTag();">确定</a>
+
                 <div class="on">
                     <span class="tag">技术</span><span class="tag">美术</span>
                 </div>
                 <br class="sep">
+
                 <div class="off">
                     <span class="tag off">Java</span><span class="tag off">Some</span><span class="tag on">技术</span>
                 </div>
@@ -138,6 +146,7 @@
 </div>
 
 <div class="foot">
+
 </div>
 
 </body>
