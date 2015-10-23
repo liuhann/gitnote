@@ -97,7 +97,7 @@ html {
   z-index: 9; }
 
 .nav-books {
-  width: 220px;
+  width: 200px;
   position: absolute;
   left: 44px;
   top: 0;
@@ -105,7 +105,8 @@ html {
   z-index: -1;
   -webkit-transform: translateX(-100px);
   -webkit-transition: -webkit-transform .3s ease-in;
-  border-right: 1px solid #ccc; }
+  background: #f6fafd;
+  border-right: 1px solid #e5ebf1; }
   .nav-books .headbar {
     background-color: #0076DE;
     color: #fff;
@@ -138,14 +139,11 @@ html {
       .nav-books .headbar .addNote:hover {
         background-color: #00AEEF; }
   .nav-books .book-list .book {
-    margin: 8px 5px;
-    width: 200px;
-    border: 1px solid #EB7092;
-    border-left: 3px solid #EB7092;
-    padding-left: 10px;
-    border-radius: 5px;
-    background-color: #fff;
+    cursor: pointer;
+    font-size: 14px;
     position: relative;
+    border-bottom: 1px solid #DADADA;
+    height: 66px;
     /*
     &:after {
       font-family: "fontello";
@@ -159,48 +157,48 @@ html {
       color: #EB7092;
     }
     */ }
+    .nav-books .book-list .book .edit {
+      display: none; }
     .nav-books .book-list .book .title {
       font-size: 18px;
-      padding: 8px;
+      padding: 12px 0 0 12px;
       color: #444; }
     .nav-books .book-list .book .total {
       font-size: 12px;
-      padding: 3px 8px;
+      padding: 3px 0px 12px 12px;
       color: #888; }
-    .nav-books .book-list .book .label {
+    .nav-books .book-list .book .oprs {
       position: absolute;
-      right: -3px;
-      border: 1px solid #EB7092;
-      top: 15px;
-      width: 20px;
-      height: 30px;
-      -webkit-border-top-left-radius: 5px;
-      -webkit-border-bottom-left-radius: 5px;
-      background-color: #fff; }
-      .nav-books .book-list .book .label .ico-round {
-        margin: 10px 4px;
-        width: 10px;
-        height: 10px;
-        border: 1px solid #EB7092;
-        border-radius: 50%; }
-    .nav-books .book-list .book a.btn-save-book {
-      display: block;
-      padding: 3px 8px; }
-    .nav-books .book-list .book.opened .title {
-      color: #EB7092; }
-    .nav-books .book-list .book.opened .label {
-      /** -webkit-transition: transform .3s ease-in; */
-      -webkit-transform-origin-x: right;
-      -webkit-transform: scaleX(-1) translateX(8px);
-      background-color: white;
-      z-index: -1; }
-    .nav-books .book-list .book input {
-      font-size: 18px;
-      padding: 8px;
-      color: #444;
-      width: 150px;
-      border: none;
-      outline: none; }
+      right: 12px;
+      font-size: 16px;
+      top: 4px;
+      display: none; }
+    .nav-books .book-list .book.selected {
+      background: #e3f0fc;
+      border-style: solid;
+      border-width: 1px 0;
+      border-color: #d9ebfc #d9ebfc #d9ebfc #3083eb; }
+      .nav-books .book-list .book.selected .oprs {
+        display: block;
+        color: #3083eb; }
+      .nav-books .book-list .book.selected .title {
+        color: #3083eb; }
+    .nav-books .book-list .book.editing .edit {
+      display: block; }
+      .nav-books .book-list .book.editing .edit input {
+        font-size: 18px;
+        margin: 6px 0 0 6px;
+        padding: 3px;
+        color: #444;
+        width: 180px;
+        border: 1px solid #DADADA;
+        outline: none; }
+    .nav-books .book-list .book.editing .btns {
+      margin: 8px 12px; }
+      .nav-books .book-list .book.editing .btns a {
+        margin-right: 10px; }
+    .nav-books .book-list .book.editing .disp {
+      display: none; }
 
 .list {
   position: absolute;

@@ -93,8 +93,21 @@ var Dialog = (function($) {
         alert(msg);
     }
 
+    function showConfirm(msg, yes, no) {
+        if (confirm(msg)) {
+            if (yes) {
+                yes();
+            }
+        } else {
+            if (no) {
+                no();
+            }
+        }
+    }
+
     return {
-        alert: showAlert
+        alert: showAlert,
+        confirm: showConfirm
     }
 }($));
 

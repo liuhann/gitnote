@@ -27,9 +27,9 @@
 <div class="sidebar">
     <i class="icon-menu on" onclick="noteService.showNotes();"></i>
     <i class="icon-tag"></i>
-    <i class="icon-wallet" onclick="bookService.toggleBook();"></i>
+    <i class="icon-book-open-1" onclick="bookService.toggleBook();"></i>
     <i class="icon-trash"></i>
-    <i class="icon-params bot"></i>
+    <i class="icon-cog-outline bot"></i>
 </div>
 
 <div class="nav-books">
@@ -40,11 +40,25 @@
     <div class="book-list">
         <ul>
             <li class="template book">
-                <div class="title"></div>
-                <div class="total"></div>
+                <div class="title disp"></div>
+                <div class="total disp"></div>
+                <div class="oprs disp">
+                    <i class="icon-pencil"></i>
+                </div>
+
+                <div class="edit">
+                    <input class="in-book-title">
+                </div>
+                <div class="edit btns">
+                    <a class="save">保存</a>
+                    <a class="cancel">取消</a>
+                    <a class="delete">删除</a>
+                </div>
+                <!--
                 <div class="label">
                     <div class="ico-round"></div>
                 </div>
+                -->
             </li>
         </ul>
     </div>
@@ -70,14 +84,14 @@
                 <div class="title"></div>
                 <div class="desc"></div>
                 <div class="pic"></div>
-                <div class="rm icon-trash">
+                <div class="rm icon-cancel-1">
                 </div>
             </li>
             <li class="dt template">
                 <div class="title"></div>
                 <div class="tags"></div>
                 <div class="desc"></div>
-                <div class="rm icon-trash">
+                <div class="rm icon-cancel-1">
                 </div>
             </li>
         </ul>

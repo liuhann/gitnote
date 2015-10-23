@@ -4,7 +4,6 @@
 
 var bookService = (function(fs, noteService) {
 
-
     var rootPath = noteService.rootPath;
 
     function listBooks() {
@@ -39,50 +38,52 @@ var bookService = (function(fs, noteService) {
             /**need refresh book */
             listBooks();
             $(".nav-books").css("-webkit-transform", "translateX(0)");
-            $(".list").css("transform", "translateX(220px)");
-            $(".content").css("left", "604px");
+            $(".list").css("transform", "translateX(200px)");
+            $(".content").css("left", "584px");
         }
     }
 
 
     function _editBook(cl) {
         var inp = $("<input class='in-book-title' placeholder='笔记本名称'>");
+
         if ($(cl).data("oname")) {
             inp.val(name);
         }
 
         $(cl).find(".title").replaceWith(inp);
-        var save = $("<a class='btn-save-book'>保存</a>");
 
-        save.click(function() {
+
+        save.click(function () {
             var bookTitle = $(".in-book-title").val();
-            if (bookTitle==="") {
+            if (bookTitle === "") {
                 saveErrorMsg("名称不能为空");
                 return;
             }
 
             var bookPath = rootPath + "book-" + bookTitle;
-            if(fs.existsSync(bookPath)) {
+            if (fs.existsSync(bookPath)) {
                 saveErrorMsg("已存在同名笔记");
                 return;
             }
 
-            if ($(cl).data("oname")==null) {
+            if ($(cl).data("oname") == null) {
                 /**new book*/
-                fs.mkdir(bookPath, function() {
-
+                fs.mkdir(bookPath, function () {
+                    listBooks();
                 });
             } else {
-                /**update book name*/
+
             }
+            /**update book name*/
         });
         $(cl).find(".total").remove();
         $(cl).append(save);
+    }
 
-        function saveErrorMsg(msg) {
-            $(cl).find("span.error").remove();
-            $(cl).append("<span class='error'>" + msg + "</span>");
-        }
+    function saveErrorMsg(msg) {
+        $(cl).find("span.error").remove();
+        $(cl).append("<span class='error'>" + msg + "</span>");
     }
 
     function _addBook(name, length) {
@@ -90,10 +91,43 @@ var bookService = (function(fs, noteService) {
 
         var cl = $(".book-list li.template.book").clone().removeClass("template");
         cl.find(".title").html(name);
-        cl.find(".total").html(length);
+        cl.find("input").val(name);
+
+        if (length===0) {
+            cl.find(".total").html("没有笔记");
+        } else {
+            cl.find(".total").html(length + "个笔记");
+        }
+
         (function(name) {
             cl.click(function() {
+                if ($(this).hasClass("selected")) {
+                    return;
+                }
+                $(".book.selected").removeClass("selected");
+                $(this).addClass("selected");
                 _openBook(name);
+            });
+
+            cl.find("a.save").click(function() {
+                if($(cl).find("a.in-book-title")) {
+
+                }
+            });
+            cl.find("a.delete").click(function() {
+                Dialog.confirm("确定删除这个笔记本?", function() {
+                    fs.rmdir(rootPath + "book-" +name, function() {
+                        listBooks();
+                    });
+                });
+            });
+
+            cl.find("a.cancel").click(function() {
+                cl.removeClass("editing");
+            });
+
+            cl.find(".icon-pencil").click(function() {
+               cl.addClass("editing");
             });
         }(name));
         $(".book-list ul").append(cl);
