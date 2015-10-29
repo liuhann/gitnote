@@ -4,8 +4,6 @@
 
 var noteService = (function(fs, http, $){
 
-
-
     /***
      *
      * Note Meta Runtime
@@ -35,7 +33,7 @@ var noteService = (function(fs, http, $){
 
     function listNotes(book) {
         if (book==null) {
-            book = "book-default";
+            book = "book-默认笔记本";
         }
         currentBook = book;
         var bookPath = rootPath + book + "/";

@@ -124,8 +124,10 @@ html {
         float: right;
         display: inline-block;
         padding: 0 10px; }
+      .nav-books .headbar i.icon-ok:before {
+        margin-right: 5px; }
       .nav-books .headbar i:hover {
-        background-color: #0078D7;
+        background-color: #00AEEF;
         cursor: pointer; }
     .nav-books .headbar .addNote {
       line-height: 44px;
@@ -228,8 +230,10 @@ html {
         float: right;
         display: inline-block;
         padding: 0 10px; }
+      .list .headbar i.icon-ok:before {
+        margin-right: 5px; }
       .list .headbar i:hover {
-        background-color: #0078D7;
+        background-color: #00AEEF;
         cursor: pointer; }
     .list .headbar .addNote {
       line-height: 44px;
@@ -262,6 +266,8 @@ html {
       list-style: none; }
       .list .note-list li.selected {
         background-color: #f8f8f8; }
+        .list .note-list li.selected .rm {
+          display: block; }
       .list .note-list li.tpd .title {
         position: absolute;
         left: 10px;
@@ -313,8 +319,6 @@ html {
         color: #525252;
         font-size: 16px;
         cursor: pointer; }
-      .list .note-list li:hover .rm {
-        display: block; }
 
 .content {
   position: absolute;
@@ -341,8 +345,10 @@ html {
         float: right;
         display: inline-block;
         padding: 0 10px; }
+      .content .headbar i.icon-ok:before {
+        margin-right: 5px; }
       .content .headbar i:hover {
-        background-color: #0078D7;
+        background-color: #00AEEF;
         cursor: pointer; }
     .content .headbar .addNote {
       line-height: 44px;

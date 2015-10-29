@@ -69,9 +69,12 @@ pre {
         display: inline-block;
         padding: 0 10px;
       }
+      &.icon-ok:before {
+        margin-right: 5px;
+      }
 
       &:hover {
-        background-color: #0078D7;
+        background-color: #00AEEF;
         cursor: pointer;
       }
     }

@@ -217,6 +217,9 @@ li {
 
       &.selected {
         background-color: #f8f8f8;
+        .rm {
+          display: block;
+        }
       }
       &.tpd {
         .title {
@@ -287,7 +290,7 @@ li {
       }
 
       &:hover .rm {
-        display: block;
+
       }
 
     }

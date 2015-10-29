@@ -113,16 +113,15 @@
         <!--
         <i class="icon-fire" onclick="formatDoc('inserthtml', '<hr/><br>');"></i>
         -->
-        <i class="icon-list-numbered" onclick="formatDoc('insertorderedlist');"></i>
-        <i class="icon-list-bullet" onclick="formatDoc('insertunorderedlist');"></i>
-        <i class=" icon-right-open" onclick="formatDoc('formatblock','blockquote');"></i>
+        <i class="icon-list" onclick="formatDoc('insertunorderedlist');"></i>
+        <i class="icon-right-open-1" onclick="formatDoc('formatblock','blockquote');"></i>
 
         <i class="icon-link"
            onclick="var sLnk=prompt('请输入链接地址','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('createlink',sLnk)}"></i>
         <i class="icon-code" onclick="formatDoc('inserthtml', '<PRE><CODE></CODE></PRE>')"></i>
         <i class="mode-md" onclick="noteService.mdMode();">MD文本模式</i>
         <i class="hidden mode-rtf" onclick="noteService.htmlMode();">图文模式</i>
-        <i class="icon-ok" onclick="noteService.saveNote();">保存</i>
+        <i class="icon-ok icon-check" onclick="noteService.saveNote();">保存</i>
     </div>
     <div id="textBox" contenteditable="true" class="markdown-body editbox">
     </div>
